@@ -61,6 +61,7 @@ function SignUp({navigation}: LoginScreenProps) {
       setLoading(true);
       console.log('http://52.91.159.245:8080/members/new');
       console.log(`${Config.API_URL_PAPAYATEST}/members/new`);
+      console.log(Config.API_URL_PAPAYATEST); // 환경 변수 값 확인
       const response = await axios.post(
         `${Config.API_URL_PAPAYATEST}/members/new`,
         {

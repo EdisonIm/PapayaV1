@@ -47,7 +47,7 @@ const orderSlice = createSlice({
       }
     },
   },
-  extraReducers: builder => {},
+  extraReducers: () => {},
 });
 
 export default orderSlice;

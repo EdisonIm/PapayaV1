@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import ImageUploader from '../components/ImageUploader';
 import NameUploader from '../components/NameUploader';
 import AddressUploader from '../components/AddressUploader';
-import PhoneNumberUploader from '../components/PhoneNumberUploader'; // PhoneNumberComponent 추가
+import PhoneNumberUploader from '../components/PhoneNumberUploader';
 
 const UserProfile = () => {
   const userEmail = 'user@example.com';

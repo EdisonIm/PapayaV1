@@ -13,6 +13,7 @@ import {RootState} from './src/store/reducer';
 import useSocket from './src/hooks/useSocket';
 import {useEffect} from 'react';
 import MakersLogin from './src/makersPages/MakersLogin';
+import MakersProfile from './src/makersPages/MakersProfile';
 
 export type LoggedInParamList = {
   UserProfile: undefined;
@@ -20,6 +21,7 @@ export type LoggedInParamList = {
   Settings: undefined;
   Delivery: undefined;
   Complete: {orderId: string};
+  MakersProfile: undefined;
 };
 
 export type RootStackParamList = {
@@ -84,6 +86,12 @@ function AppInner() {
         name="Settings"
         component={Settings}
         options={{title: '내 정보'}}
+      />
+      {'MakersProfile'}
+      <Tab.Screen
+        name="MakersProfile"
+        component={MakersProfile}
+        options={{title: '메이커스 정보'}}
       />
     </Tab.Navigator>
   ) : (

@@ -62,9 +62,11 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
         console.log(response.data);
         Alert.alert('알림', '메이커스 로그인 되었습니다.');
         dispatch(
-          makersUserSlice.actions.setMaker({
+          makersUserSlice.actions.setMakersUser({ // setMaker -> setMakersUser로 수정
             name: response.data.data.name,
             email: response.data.data.email,
+            accessToken: response.data.data.accessToken, // 예시로 추가한 부분, 실제 응답 데이터에 따라 조정 필요
+            refreshToken: response.data.data.refreshToken, // 예시로 추가한 부분, 실제 응답 데이터에 따라 조정 필요
           }),
         );
         navigation.navigate('MakersProfile');

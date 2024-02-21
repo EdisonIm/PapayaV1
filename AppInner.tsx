@@ -1,3 +1,4 @@
+import MainPage from './src/pages/MainPage';
 import Login from './src/pages/Login';
 import SignUp from './src/pages/SignUp';
 import Orders from './src/pages/Orders';
@@ -11,6 +12,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from './src/store/reducer';
 import useSocket from './src/hooks/useSocket';
 import {useEffect} from 'react';
+import MakersLogin from './src/makersPages/MakersLogin';
 
 export type LoggedInParamList = {
   UserProfile: undefined;
@@ -21,8 +23,10 @@ export type LoggedInParamList = {
 };
 
 export type RootStackParamList = {
+  Main: undefined;
   Login: undefined;
   SignUp: undefined;
+  MakersLogin: undefined;
 };
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
@@ -84,6 +88,11 @@ function AppInner() {
   ) : (
     <Stack.Navigator>
       <Stack.Screen
+        name="Main"
+        component={MainPage}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Login"
         component={Login}
         options={{title: '로그인'}}
@@ -92,6 +101,11 @@ function AppInner() {
         name="SignUp"
         component={SignUp}
         options={{title: '회원가입'}}
+      />
+      <Stack.Screen
+        name="MakersLogin"
+        component={MakersLogin}
+        options={{title: '메이커스 로그인'}}
       />
     </Stack.Navigator>
   );

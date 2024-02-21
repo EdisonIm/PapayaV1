@@ -33,9 +33,11 @@ function Login({navigation}: LoginScreenProps) {
   const onChangeEmail = useCallback((text: string) => {
     setEmail(text.trim());
   }, []);
+
   const onChangePassword = useCallback((text: string) => {
     setPassword(text.trim());
   }, []);
+
   const onSubmit = useCallback(async () => {
     if (loading) {
       return;
@@ -48,27 +50,33 @@ function Login({navigation}: LoginScreenProps) {
     }
     try {
       setLoading(true);
-      console.log(`${Config.API_URL_PAPAYATEST}/members/login`);
-      console.log('http://3.36.115.202:8080/members/login');
       const response = await axios.post(
         `${Config.API_URL_PAPAYATEST}/members/login`,
-        {
-          email,
-          password,
-        },
+        {email, password},
       );
-      console.log(response.data);
-      Alert.alert('알림', '로그인 되었습니다.');
-      dispatch(
-        userSlice.actions.setUser({
-          name: response.data.data.name,
-          email: response.data.data.email,
-        }),
-      );
+
+      // 서버로부터의 응답 확인 및 보호 코드 추가
+      if (response.data && response.data.data && response.data.data.name) {
+        console.log(response.data);
+        Alert.alert('알림', '로그인 되었습니다.');
+        dispatch(
+          userSlice.actions.setUser({
+            name: response.data.data.name,
+            email: response.data.data.email,
+          }),
+        );
+      } else {
+        // 예상치 못한 응답 구조
+        console.error('Unexpected response structure:', response.data);
+        Alert.alert('알림', '응답 구조가 예상과 다릅니다.');
+      }
     } catch (error) {
+      console.error(error);
       const errorResponse = (error as AxiosError<ErrorResponse>).response;
-      if (errorResponse) {
+      if (errorResponse && errorResponse.data && errorResponse.data.message) {
         Alert.alert('알림', errorResponse.data.message);
+      } else {
+        Alert.alert('알림', '로그인에 실패하였습니다.');
       }
     } finally {
       setLoading(false);
@@ -79,11 +87,8 @@ function Login({navigation}: LoginScreenProps) {
     navigation.navigate('SignUp');
   }, [navigation]);
 
-  const toUserProfile = useCallback(() => {
-    navigation.navigate('UserProfile');
-  }, [navigation]);
-
   const canGoNext = email && password;
+
   return (
     <DismissKeyboardView>
       <View style={styles.inputWrapper}>
@@ -139,9 +144,6 @@ function Login({navigation}: LoginScreenProps) {
         </Pressable>
         <Pressable onPress={toSignUp}>
           <Text>회원가입하기</Text>
-        </Pressable>
-        <Pressable onPress={toUserProfile}>
-          <Text>회원정보 추가전송하기</Text>
         </Pressable>
       </View>
     </DismissKeyboardView>

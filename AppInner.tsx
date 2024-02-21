@@ -13,6 +13,7 @@ import useSocket from './src/hooks/useSocket';
 import {useEffect} from 'react';
 
 export type LoggedInParamList = {
+  UserProfile: undefined;
   Orders: undefined;
   Settings: undefined;
   Delivery: undefined;
@@ -22,10 +23,9 @@ export type LoggedInParamList = {
 export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
-  UserProfile: undefined;
 };
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<LoggedInParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function AppInner() {
@@ -59,6 +59,12 @@ function AppInner() {
 
   return isLoggedIn ? (
     <Tab.Navigator>
+      {'UserProfile'}
+      <Tab.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={{title: '내 정보'}}
+      />
       <Tab.Screen
         name="Orders"
         component={Orders}
@@ -86,11 +92,6 @@ function AppInner() {
         name="SignUp"
         component={SignUp}
         options={{title: '회원가입'}}
-      />
-      <Stack.Screen
-        name="UserProfile"
-        component={UserProfile}
-        options={{title: '내 정보'}}
       />
     </Stack.Navigator>
   );

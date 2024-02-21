@@ -13,7 +13,7 @@ import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
 import {RootStackParamList} from '../../AppInner';
 import {useAppDispatch} from '../store';
-import makersUserSlice from '../slices/makersUser'; // Assuming you have a separate slice for makers
+import makersUserSlice from '../slices/makersUser';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 type MakersLoginScreenProps = NativeStackScreenProps<
@@ -54,22 +54,20 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
     try {
       setLoading(true);
       const response = await axios.post(
-        `${Config.API_URL_PAPAYATEST}/makers/login`, // Update this URL to the makers' endpoint
+        `${Config.API_URL_PAPAYATEST}/makers/login`,
         {email, password},
       );
 
-      // Handle the response for makers
       if (response.data && response.data.data) {
         console.log(response.data);
         Alert.alert('알림', '메이커스 로그인 되었습니다.');
         dispatch(
           makersUserSlice.actions.setMaker({
-            // Update the reducer and payload according to your state management
             name: response.data.data.name,
             email: response.data.data.email,
           }),
         );
-        navigation.navigate('MakersProfile'); // Update the navigation if there's a different flow for makers
+        navigation.navigate('MakersProfile');
       } else {
         Alert.alert('알림', '로그인에 실패하였습니다.');
       }
@@ -87,6 +85,11 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
   }, [loading, dispatch, navigation, email, password]);
 
   const canGoNext = email && password;
+
+  const navigateToSignUp = useCallback(() => {
+    navigation.navigate('MakersSignUp');
+  }, [navigation]);
+
   return (
     <DismissKeyboardView>
       <View style={styles.inputWrapper}>
@@ -140,7 +143,11 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
             <Text style={styles.loginButtonText}>메이커스 로그인</Text>
           )}
         </Pressable>
-        {/* Add any additional buttons or navigation options for makers here */}
+        <Pressable
+          style={[styles.loginButton, {marginTop: 10}]} // 스타일은 필요에 따라 조정하세요
+          onPress={navigateToSignUp}>
+          <Text style={styles.loginButtonText}>기업 회원 가입</Text>
+        </Pressable>
       </View>
     </DismissKeyboardView>
   );

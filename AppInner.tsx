@@ -27,6 +27,7 @@ export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   MakersLogin: undefined;
+  MakersSignUp: undefined;
 };
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();

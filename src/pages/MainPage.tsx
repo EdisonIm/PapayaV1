@@ -21,7 +21,9 @@ const MainPage: React.FC<MainPageProps> = ({navigation}) => {
       resizeMode="cover" // 'cover'는 이미지가 잘리지 않도록 합니다.
       style={styles.backgroundImage}>
       <View style={styles.overlay}>
-        <Text style={styles.title}>파파야 여러분, 안녕하세요!</Text>
+        <Text style={styles.title}>
+          즐겁고 부담없는 식사,{'\n'}Welcome to Papaya!
+        </Text>
         <TouchableOpacity
           style={[styles.button, styles.personal]}
           onPress={() => navigation.navigate('Login')}>
@@ -48,8 +50,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)', // 이미지 위에 어두운 오버레이 추가
   },
   title: {
-    fontSize: 28,
-    marginTop: 30,
+    fontSize: 33,
+    marginTop: 50,
     marginBottom: 340,
     fontWeight: 'bold',
     color: '#fff', // 제목 색상을 흰색으로 변경

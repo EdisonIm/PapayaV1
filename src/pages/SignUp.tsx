@@ -14,7 +14,7 @@ import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
 import {RootStackParamList} from '../../AppInner';
 
-type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
 interface ErrorResponse {
   message: string;
@@ -24,6 +24,7 @@ function SignUp({navigation}: LoginScreenProps) {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const emailRef = useRef<TextInput | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 

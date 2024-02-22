@@ -1,19 +1,21 @@
 import React from 'react';
 import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {RootState} from '../store/reducer';
+import {RootState} from '../../src/store/reducer';
 
-function Settings() {
-  const money = useSelector((state: RootState) => state.user.money);
-  const name = useSelector((state: RootState) => state.user.name);
+function MakersSettings() {
+  const revenue = useSelector((state: RootState) => state.makersUser.revenue); // 수익금
+  const companyName = useSelector(
+    (state: RootState) => state.makersUser.companyName,
+  ); // 사업자등록증상(메이커스) 이름
 
   return (
     <View>
-      <View style={styles.money}>
-        <Text style={styles.moneyText}>
-          {name}님의 수익금{' '}
+      <View style={styles.revenue}>
+        <Text style={styles.revenueText}>
+          {companyName}님의 수익금{' '}
           <Text style={{fontWeight: 'bold'}}>
-            {money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            {revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           </Text>
           원
         </Text>
@@ -33,10 +35,10 @@ function Settings() {
 }
 
 const styles = StyleSheet.create({
-  money: {
+  revenue: {
     padding: 20,
   },
-  moneyText: {
+  revenueText: {
     fontSize: 16,
   },
   buttonZone: {
@@ -59,4 +61,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Settings;
+export default MakersSettings;

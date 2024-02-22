@@ -1,7 +1,7 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {Alert, StyleSheet, Text, TextInput, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import DismissKeyboardView from '../components/DissmisKeyboardView';
+import DismissKeyboardView from '../../srcMakers/makersComponents/DissmisKeyboardView';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
 import {RootStackParamList} from '../../AppInner';
@@ -63,7 +63,7 @@ function MakersSignUp({navigation}: MakersSignUpScreenProps) {
     try {
       setLoading(true);
       const response = await axios.post(
-        `${Config.API_URL_PAPAYATEST}/makers/signup`,
+        `${Config.API_URL_PAPAYATEST}/makers/new`,
         {
           email,
           password,

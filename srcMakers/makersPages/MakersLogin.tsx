@@ -8,12 +8,12 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import DismissKeyboardView from '../components/DissmisKeyboardView';
+import DismissKeyboardView from '../makersComponents/DissmisKeyboardView';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
 import {RootStackParamList} from '../../AppInner';
-import {useAppDispatch} from '../store';
-import makersUserSlice from '../slices/makersUser';
+import {useAppDispatch} from '../../src/store/index';
+import makersUserSlice from '../../src/slices/makersUser';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 type MakersLoginScreenProps = NativeStackScreenProps<
@@ -62,14 +62,11 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
         console.log(response.data);
         Alert.alert('알림', '메이커스 로그인 되었습니다.');
         dispatch(
-          makersUserSlice.actions.setMakersUser({ // setMaker -> setMakersUser로 수정
+          makersUserSlice.actions.setMakersUser({
             name: response.data.data.name,
             email: response.data.data.email,
-            accessToken: response.data.data.accessToken, // 예시로 추가한 부분, 실제 응답 데이터에 따라 조정 필요
-            refreshToken: response.data.data.refreshToken, // 예시로 추가한 부분, 실제 응답 데이터에 따라 조정 필요
           }),
         );
-        navigation.navigate('MakersProfile');
       } else {
         Alert.alert('알림', '로그인에 실패하였습니다.');
       }
@@ -84,7 +81,7 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
     } finally {
       setLoading(false);
     }
-  }, [loading, dispatch, navigation, email, password]);
+  }, [loading, dispatch, email, password]);
 
   const canGoNext = email && password;
 
@@ -148,7 +145,7 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
         <Pressable
           style={[styles.loginButton, {marginTop: 10}]} // 스타일은 필요에 따라 조정하세요
           onPress={navigateToSignUp}>
-          <Text style={styles.loginButtonText}>기업 회원 가입</Text>
+          <Text style={styles.loginButtonText}>메이커스 회원 가입</Text>
         </Pressable>
       </View>
     </DismissKeyboardView>

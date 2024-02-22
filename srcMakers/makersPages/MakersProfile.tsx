@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import ImageUploader from '../components/ImageUploader';
-import MakersNameUploader from '../makersComponents/MakersNameUploader';
+import ImageUploader from '../makersComponents/ImageUploader';
+import MakersNameUploader from '../../srcMakers/makersComponents/MakersNameUploader';
 import MakersAddressUploader from '../makersComponents/MakersAddressUploader';
-import MakersPhoneNumberUploader from '../makersComponents/MakersPhoneNumberUploader';
+import MakersPhoneNumberUploader from '../../srcMakers/makersComponents/MakersPhoneNumberUploader';
 
 const MakersProfile = () => {
   const makersEmail = 'makers@example.com';

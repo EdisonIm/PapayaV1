@@ -5,6 +5,7 @@ const initialState = {
   accessToken: '',
   refreshToken: '',
   money: 0,
+  name: '',
 };
 const userSlice = createSlice({
   name: 'user',

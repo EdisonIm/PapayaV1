@@ -1,53 +1,33 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 
-interface MakersUserState {
-  email: string;
-  accessToken: string;
-  refreshToken: string;
-  companyName: string;
-}
-
-const initialState: MakersUserState = {
+const initialState = {
   email: '',
   accessToken: '',
   refreshToken: '',
+  money: 0,
   companyName: '',
+  revenue: 0,
 };
-
 const makersUserSlice = createSlice({
   name: 'makersUser',
   initialState,
   reducers: {
-    setMakersUser(state, action: PayloadAction<MakersUserState>) {
-      const {email, accessToken, refreshToken, companyName} = action.payload;
-      state.email = email;
-      state.accessToken = accessToken;
-      state.refreshToken = refreshToken;
-      state.companyName = companyName;
+    setMakersUser(state, action) {
+      state.email = action.payload.email;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
     },
-    setMakersAccessToken(state, action: PayloadAction<string>) {
+    setAccessToken(state, action) {
       state.accessToken = action.payload;
     },
-    setMakersRefreshToken(state, action: PayloadAction<string>) {
+    setRefreshToken(state, action) {
       state.refreshToken = action.payload;
     },
-    setCompanyName(state, action: PayloadAction<string>) {
-      state.companyName = action.payload;
+    setMoney(state, action) {
+      state.money = action.payload;
     },
-    // Add other reducers as necessary for your makers' user functionality
   },
-  extraReducers: () => {
-    // Handle other actions, such as asynchronous thunk actions, if necessary
-  },
+  extraReducers: () => {},
 });
 
-// Export the actions
-export const {
-  setMakersUser,
-  setMakersAccessToken,
-  setMakersRefreshToken,
-  setCompanyName,
-} = makersUserSlice.actions;
-
-// Export the reducer
-export default makersUserSlice.reducer;
+export default makersUserSlice;

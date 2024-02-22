@@ -1,26 +1,16 @@
-import React, {useState} from 'react';
-import {
-  Button,
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
-} from 'react-native';
+import React from 'react';
+import {Button, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import useImageUpload from '../hooks/useImageUpload';
 
-interface ImageUploadComponentProps {
+// Props 타입은 그대로 유지
+interface ImageUploaderProps {
   onImageUploaded: (url: string) => void;
 }
 
-const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({
-  onImageUploaded,
-}) => {
+const ImageUploader: React.FC<ImageUploaderProps> = ({onImageUploaded}) => {
   const {handleUploadImage, imageUrl, isUploading, setImage, uploadError} =
     useImageUpload(onImageUploaded);
-
-  const [email, setEmail] = useState('');
 
   const handleSelectPress = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
@@ -35,26 +25,21 @@ const ImageUploadComponent: React.FC<ImageUploadComponentProps> = ({
     });
   };
 
+  // 수정된 부분: email 상태 관리 삭제, handleUploadImage 호출 시 email 인자 삭제
   const handleUploadPress = async () => {
-    await handleUploadImage(email);
+    await handleUploadImage();
   };
 
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="이메일 주소"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.textInput}
-        keyboardType="email-address"
-      />
+      {/* 이메일 입력 필드 삭제 */}
       <TouchableOpacity onPress={handleSelectPress} style={styles.button}>
         <Text style={styles.buttonText}>사진 선택하기</Text>
       </TouchableOpacity>
       <Button
         onPress={handleUploadPress}
         title="사진 올리기"
-        disabled={isUploading || !email}
+        disabled={isUploading}
       />
       {isUploading ? <Text>업로드 중...</Text> : null}
       {imageUrl ? <Text>업로드 완료: {imageUrl}</Text> : null}
@@ -95,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ImageUploadComponent;
+export default ImageUploader;

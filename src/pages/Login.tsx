@@ -56,13 +56,13 @@ function Login({navigation}: LoginScreenProps) {
       );
 
       // 서버로부터의 응답 확인 및 보호 코드 추가
-      if (response.data && response.data.data && response.data.data.name) {
+      if (response.data && response.data.accessToken) {
         console.log(response.data);
         Alert.alert('알림', '로그인 되었습니다.');
         dispatch(
           userSlice.actions.setUser({
-            name: response.data.data.name,
-            email: response.data.data.email,
+            email: response.data.email,
+            accessToken: response.data.accessToken,
           }),
         );
       } else {

@@ -63,8 +63,8 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
         Alert.alert('알림', '메이커스 로그인 되었습니다.');
         dispatch(
           makersUserSlice.actions.setMakersUser({
-            name: response.data.data.name,
             email: response.data.data.email,
+            accessToken: response.data.data.accessToken,
           }),
         );
       } else {

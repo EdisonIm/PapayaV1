@@ -3,13 +3,15 @@ import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
 import {Asset} from 'react-native-image-picker';
 
+// onImageUploaded 콜백 함수를 받는 useImageUpload 훅 정의
 function useImageUpload(onImageUploaded: (url: string) => void) {
   const [image, setImage] = useState<Asset | null>(null);
   const [imageUrl, setImageUrl] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
-  const handleUploadImage = async (email: string) => {
+  // 업로드 함수에서 email 파라미터를 제거합니다.
+  const handleUploadImage = async () => {
     if (!image) {
       return;
     }
@@ -20,7 +22,8 @@ function useImageUpload(onImageUploaded: (url: string) => void) {
       type: image.type || 'image/jpeg',
       name: image.fileName || 'upload.jpg',
     });
-    formData.append('email', email);
+    // 여기에서 현재 로그인된 사용자의 이메일을 사용하도록 수정
+    // 예: formData.append('email', loggedInUserEmail);
 
     try {
       setIsUploading(true);
@@ -34,14 +37,13 @@ function useImageUpload(onImageUploaded: (url: string) => void) {
         },
       );
 
-      if (response.data) {
-        if (response.data.image) {
-          const {location} = response.data.image;
-          if (location) {
-            setImageUrl(location);
-            onImageUploaded(location);
-          }
-        }
+      if (
+        response.data &&
+        response.data.image &&
+        response.data.image.location
+      ) {
+        setImageUrl(response.data.image.location);
+        onImageUploaded(response.data.image.location);
       }
     } catch (error) {
       const e = error as AxiosError;

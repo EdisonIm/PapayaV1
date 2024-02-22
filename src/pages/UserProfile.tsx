@@ -1,37 +1,58 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 import ImageUploader from '../components/ImageUploader';
 import NameUploader from '../components/NameUploader';
 import AddressUploader from '../components/AddressUploader';
 import PhoneNumberUploader from '../components/PhoneNumberUploader';
+import {useNavigation} from '@react-navigation/native';
+import {useAppDispatch} from '../store';
+import {useSelector} from 'react-redux';
+import userSlice from '../slices/user';
+
+const {width} = Dimensions.get('window'); // 화면 너비를 가져옵니다.
 
 const UserProfile = () => {
-  const userEmail = 'user@example.com';
+  const userEmail = useSelector(state => state.user.email);
   const [uploadedImageUrl, setUploadedImageUrl] = useState('');
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
 
   const handleImageUpload = (url: string) => {
     setUploadedImageUrl(url);
   };
 
-  let uploadedImageText = null;
-  if (uploadedImageUrl) {
-    uploadedImageText = <Text>업로드된 이미지 URL: {uploadedImageUrl}</Text>;
-  }
+  const handleLogout = () => {
+    dispatch(userSlice.actions.setUser(null));
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Login'}],
+    });
+  };
 
   return (
-    <ScrollView
-      style={styles.scrollView}
-      showsVerticalScrollIndicator={false}
-      scrollEventThrottle={16}>
+    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>사용자 프로필 야매 수정 페이지</Text>
-        </View>
         <ImageUploader onImageUploaded={handleImageUpload} />
         <NameUploader userEmail={userEmail} />
         <AddressUploader userEmail={userEmail} />
         <PhoneNumberUploader userEmail={userEmail} />
-        {uploadedImageText}
+        {uploadedImageUrl && (
+          <Image
+            source={{uri: uploadedImageUrl}}
+            style={styles.uploadedImage}
+          />
+        )}
+        <TouchableOpacity style={styles.button} onPress={handleLogout}>
+          <Text style={styles.buttonText}>로그아웃</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -39,22 +60,32 @@ const UserProfile = () => {
 
 const styles = StyleSheet.create({
   scrollView: {
-    flex: 1,
-    backgroundColor: 'orange',
+    backgroundColor: '#F5F5F5',
   },
   container: {
-    justifyContent: 'flex-start',
-    paddingVertical: 20,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: width * 0.025, // 좌우 패딩을 화면 너비의 2.5%로 설정
   },
-  headerContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
+  uploadedImage: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    marginVertical: 20,
   },
-  headerText: {
-    fontSize: 20,
+  button: {
+    backgroundColor: '#6E7F80',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginTop: 20,
+    marginBottom: 20, // 버튼 간의 수직 간격 추가
+  },
+  buttonText: {
+    color: '#FFFFFF',
     fontWeight: 'bold',
-    color: 'blue',
   },
+  // 기타 스타일...
 });
 
 export default UserProfile;

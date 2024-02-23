@@ -17,10 +17,12 @@ import UserProfile from './src/pages/UserProfile';
 import MakersLogin from './srcMakers/makersPages/MakersLogin';
 import MakersProfile from './srcMakers/makersPages/MakersProfile';
 import MakersSignUp from './srcMakers/makersPages/MakersSignUp';
+import UserProfileEdit from './src/pages/UserProfileEdit';
 
 // Define param lists for navigation
 export type LoggedInParamList = {
   UserProfile: undefined;
+  UserProfileEdit: undefined;
   Orders: undefined;
   Settings: undefined;
   Delivery: undefined;
@@ -73,6 +75,11 @@ function AppInner() {
           name="UserProfile"
           component={UserProfile}
           options={{title: '내 정보'}}
+        />
+        <Tab.Screen
+          name="UserProfileEdit"
+          component={UserProfileEdit}
+          options={{title: '내 정보 수정'}}
         />
         <Tab.Screen
           name="Orders"

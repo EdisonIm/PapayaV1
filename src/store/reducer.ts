@@ -1,13 +1,15 @@
 import {combineReducers} from 'redux';
 
-import userSlice from '../slices/user';
-import orderSlice from '../slices/order';
-import makersUserSlice from '../slices/makersUser';
+// 아래와 같이 기본 export된 리듀서를 직접 import합니다.
+import userReducer from '../slices/user';
+import orderReducer from '../slices/order';
+import makersUserReducer from '../slices/makersUser';
 
+// combineReducers에는 바로 리듀서 함수를 전달합니다.
 const rootReducer = combineReducers({
-  user: userSlice.reducer,
-  order: orderSlice.reducer,
-  makersUser: makersUserSlice.reducer,
+  user: userReducer,
+  order: orderReducer,
+  makersUser: makersUserReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

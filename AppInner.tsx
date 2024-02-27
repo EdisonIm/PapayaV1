@@ -116,7 +116,7 @@ function AppInner() {
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{title: '로그인'}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="SignUp"

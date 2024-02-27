@@ -45,17 +45,16 @@ function AppInner() {
   const userState = useSelector((state: RootState) => state.user);
   const makersUserState = useSelector((state: RootState) => state.makersUser);
 
-  const isLoggedIn = !!userState?.email;
+  const isLoggedIn = !!userState.email;
   const isMakersLoggedIn = !!makersUserState?.email; //이부분 수정해야됨
 
   const [socket, disconnect] = useSocket();
 
   useEffect(() => {
+    // Handle socket connections and disconnections here
     if (socket && isLoggedIn) {
-      // accessToken을 사용하여 소켓 서버에 로그인 요청
       socket.emit('login', {
-        email: userState.email,
-        token: userState.accessToken, // 수정: accessToken 사용
+        /* Your login data */
       });
       socket.on('data', data => {
         console.log(data);
@@ -67,7 +66,7 @@ function AppInner() {
         disconnect();
       }
     };
-  }, [isLoggedIn, socket, disconnect, userState]);
+  }, [isLoggedIn, socket]);
 
   if (isLoggedIn || isMakersLoggedIn) {
     return (

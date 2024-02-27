@@ -2,7 +2,7 @@ import {useCallback} from 'react';
 import SocketIOClient, {Socket} from 'socket.io-client';
 import Config from 'react-native-config';
 import {useSelector} from 'react-redux';
-import {RootState} from '../store/reducer';
+import {RootState} from '../../src/store/reducer';
 
 let socket: Socket | undefined;
 const useSocket = (): [Socket | undefined, () => void] => {

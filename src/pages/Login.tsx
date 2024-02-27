@@ -13,8 +13,8 @@ import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
 import {RootStackParamList} from '../../AppInner';
 import {useAppDispatch} from '../store';
+import userSlice from '../slices/user';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {login as loginAction} from '../slices/user';
 
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
@@ -59,9 +59,8 @@ function Login({navigation}: LoginScreenProps) {
       if (response.data && response.data.accessToken) {
         console.log(response.data);
         Alert.alert('알림', '로그인 되었습니다.');
-        // dispatch 호출을 수정합니다.
         dispatch(
-          loginAction({
+          userSlice.actions.setUser({
             email: response.data.email,
             accessToken: response.data.accessToken,
           }),

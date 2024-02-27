@@ -1,26 +1,32 @@
 import React, {useState} from 'react';
 import {
   View,
-  Text,
   TextInput,
+  Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
   Dimensions,
 } from 'react-native';
-import {useAppDispatch} from '../store';
-import {updateUserInfo} from '../slices/user'; // 가정: user 슬라이스에 updateUserInfo 액션이 정의되어 있음
-
-const {width} = Dimensions.get('window');
+import {useSelector} from 'react-redux';
+import {RootState} from '../store/reducer';
 
 const UserProfileEdit = () => {
-  const [email, setEmail] = useState('');
-  const dispatch = useAppDispatch();
+  const userEmail = useSelector((state: RootState) => state.user.email);
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [imageURL, setImageURL] = useState('');
 
+  // 정보 저장 핸들러
   const handleSave = () => {
-    // 사용자 정보 업데이트 로직
-    dispatch(updateUserInfo({email}));
-    // 저장 후 액션, 예: 알림 표시 또는 페이지 이동
+    // 여기에 정보 저장 로직 구현
+    // 예: API 호출 등
+    Alert.alert(
+      'Information Saved',
+      'Your information has been updated successfully.',
+    );
   };
 
   return (
@@ -28,43 +34,69 @@ const UserProfileEdit = () => {
       <View style={styles.container}>
         <TextInput
           style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-          placeholder="이메일"
+          value={name}
+          onChangeText={setName}
+          placeholder="Name"
+        />
+        <TextInput
+          style={styles.input}
+          value={address}
+          onChangeText={setAddress}
+          placeholder="Address"
+        />
+        <TextInput
+          style={styles.input}
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
+          placeholder="Phone Number"
+        />
+        <TextInput
+          style={styles.input}
+          value={imageURL}
+          onChangeText={setImageURL}
+          placeholder="Image URL"
         />
         <TouchableOpacity style={styles.button} onPress={handleSave}>
-          <Text style={styles.buttonText}>저장하기</Text>
+          <Text style={styles.buttonText}>Save Changes</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
 
-// 스타일은 기존의 것을 참조하거나 필요에 따라 조정
+// 스크린의 너비를 기준으로 스타일을 조정합니다.
+const {width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   scrollView: {
+    flex: 1,
     backgroundColor: '#F5F5F5',
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: width * 0.025,
+    paddingHorizontal: width * 0.025, // 좌우 여백을 화면 너비의 2.5%로 설정
+    alignItems: 'stretch',
   },
   input: {
-    borderColor: 'gray',
+    backgroundColor: '#FFFFFF',
+    borderColor: '#CCCCCC',
     borderWidth: 1,
+    borderRadius: 5,
     padding: 10,
-    marginVertical: 10,
+    marginBottom: 15,
+    fontSize: 16,
   },
   button: {
-    backgroundColor: '#6E7F80',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginTop: 20,
+    backgroundColor: '#4e9af1',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
   },
   buttonText: {
     color: '#FFFFFF',
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

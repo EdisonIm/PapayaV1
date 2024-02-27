@@ -31,7 +31,7 @@ export type LoggedInParamList = {
 };
 
 export type RootStackParamList = {
-  Main: undefined;
+  MainPage: undefined;
   Login: undefined;
   SignUp: undefined;
   MakersLogin: undefined;
@@ -45,7 +45,7 @@ function AppInner() {
   const userState = useSelector((state: RootState) => state.user);
   const makersUserState = useSelector((state: RootState) => state.makersUser);
 
-  const isLoggedIn = !!userState.email;
+  const isLoggedIn = !!userState?.email;
   const isMakersLoggedIn = !!makersUserState?.email; //이부분 수정해야됨
 
   const [socket, disconnect] = useSocket();
@@ -66,7 +66,7 @@ function AppInner() {
         disconnect();
       }
     };
-  }, [isLoggedIn, socket]);
+  }, [disconnect, isLoggedIn, socket]);
 
   if (isLoggedIn || isMakersLoggedIn) {
     return (
@@ -109,7 +109,7 @@ function AppInner() {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Main"
+          name="MainPage"
           component={MainPage}
           options={{headerShown: false}}
         />

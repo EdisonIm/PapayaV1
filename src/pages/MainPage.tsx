@@ -17,7 +17,7 @@ type MainPageProps = {
 const MainPage: React.FC<MainPageProps> = ({navigation}) => {
   return (
     <ImageBackground
-      source={require('../assets/images/foodiesfeed.com_cheeseburger.jpg')} // 이미지 경로 수정
+      source={require('../assets/images/foodiesfeed.com_cheeseburger.jpg')}
       resizeMode="cover" // 'cover'는 이미지가 잘리지 않도록 합니다.
       style={styles.backgroundImage}>
       <View style={styles.overlay}>

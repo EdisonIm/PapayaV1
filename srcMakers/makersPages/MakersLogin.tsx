@@ -143,7 +143,7 @@ function MakersLogin({navigation}: MakersLoginScreenProps) {
           )}
         </Pressable>
         <Pressable
-          style={[styles.loginButton, {marginTop: 10}]} // 스타일은 필요에 따라 조정하세요
+          style={[styles.loginButton, {marginTop: 10}]}
           onPress={navigateToSignUp}>
           <Text style={styles.loginButtonText}>메이커스 회원 가입</Text>
         </Pressable>

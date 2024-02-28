@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import {RootState} from '../store/reducer';
+import {RootState} from '../../store/reducer';
 
 const UserProfileEdit = () => {
   const userEmail = useSelector((state: RootState) => state.user.email);

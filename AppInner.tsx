@@ -12,12 +12,12 @@ import SignUp from './src/pages/SignUp';
 import Orders from './src/pages/Orders';
 import Delivery from './src/pages/Delivery';
 import Settings from './src/pages/Settings';
-import UserProfile from './src/pages/UserProfile';
+import UserProfile from './src/pages/UserProfile/UserProfile';
 // makers
 import MakersLogin from './srcMakers/makersPages/MakersLogin';
 import MakersProfile from './srcMakers/makersPages/MakersProfile';
 import MakersSignUp from './srcMakers/makersPages/MakersSignUp';
-import UserProfileEdit from './src/pages/UserProfileEdit';
+import UserProfileEdit from './src/pages/UserProfile/UserProfileEdit';
 
 // Define param lists for navigation
 export type LoggedInParamList = {

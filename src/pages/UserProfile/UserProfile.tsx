@@ -10,8 +10,8 @@ import {
   Dimensions,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {RootState} from '../store/reducer';
-import {logout} from '../slices/user';
+import {RootState} from '../../store/reducer';
+import {logout} from '../../slices/user';
 import axios from 'axios';
 import Config from 'react-native-config';
 import {useNavigation} from '@react-navigation/native';

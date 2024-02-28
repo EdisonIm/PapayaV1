@@ -18,7 +18,7 @@ const PhoneNumberUploader: React.FC<PhoneNumberUploaderProps> = ({
     setIsSubmitting(true);
     try {
       await axios.post(`${Config.API_URL_PAPAYATEST}/members/phone`, {
-        email: userEmail, // 이메일 주소를 prop에서 직접 사용합니다.
+        email: userEmail,
         phone,
       });
       Alert.alert('성공!', '전화번호가 성공적으로 제출되었습니다!');

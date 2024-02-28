@@ -14,15 +14,25 @@ import {RootState} from '../../store/reducer';
 import {logout} from '../../slices/user';
 import axios from 'axios';
 import Config from 'react-native-config';
-import {useNavigation} from '@react-navigation/native';
+import * as NavigationService from '../../utils/NavigationService';
+
+interface UserData {
+  id?: number;
+  email?: string;
+  phone?: number;
+  image?: string;
+  zipCode?: number;
+  address1?: string;
+  address2?: string;
+  address3?: string;
+}
 
 const {width} = Dimensions.get('window'); // Get the width of the device
 
 const UserProfile = () => {
   const userEmail = useSelector((state: RootState) => state.user.email);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState<UserData>({});
   const dispatch = useDispatch();
-  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -30,16 +40,19 @@ const UserProfile = () => {
         const response = await axios.get(
           `${Config.API_URL_PAPAYATEST}/members`,
         );
-        const user = response.data.find(user => user.email === userEmail);
-        if (user) {
-          setUserData(user);
+        // 변경된 부분: 변수 이름 'user'를 'members'로 변경
+        const members = response.data.find(
+          (members: any) => members.email === userEmail,
+        );
+        if (members) {
+          setUserData(members);
         } else {
-          console.error('User not found');
-          Alert.alert('Error', 'User not found');
+          console.error('Members not found');
+          Alert.alert('Error', 'Members not found');
         }
       } catch (error) {
-        console.error('Failed to fetch user profile', error);
-        Alert.alert('Error', 'Failed to fetch user profile');
+        console.error('Failed to fetch members profile', error);
+        Alert.alert('Error', 'Failed to fetch members profile');
       }
     };
 
@@ -53,7 +66,8 @@ const UserProfile = () => {
         text: 'Logout',
         onPress: () => {
           dispatch(logout());
-          navigation.navigate('MainPage');
+          // 사용자 정의 네비게이션 서비스를 사용하여 'MainPage'로 이동
+          NavigationService.navigate('MainPage');
         },
       },
     ]);

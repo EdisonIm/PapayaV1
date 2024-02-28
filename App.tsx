@@ -3,11 +3,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
 import store from './src/store';
 import AppInner from './AppInner';
+import * as NavigationService from './src/utils/NavigationService';
 
 function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
+      <NavigationContainer ref={NavigationService.navigationRef}>
         <AppInner />
       </NavigationContainer>
     </Provider>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,6 @@ import {
   Image,
   Dimensions,
   Button,
-  RefreshControl,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../store/reducer';
@@ -18,7 +17,6 @@ import axios from 'axios';
 import Config from 'react-native-config';
 import * as NavigationService from '../../utils/NavigationService';
 import {useNavigation} from '@react-navigation/native';
-import {useRefresh} from '../../utils/RefreshContext';
 
 interface UserData {
   name: string;
@@ -39,27 +37,30 @@ const UserProfile = () => {
   const userEmail = useSelector((state: RootState) => state.user.email);
   const [userData, setUserData] = useState<UserData>({});
   const dispatch = useDispatch();
-  const {refreshing, onRefresh} = useRefresh(); // 추가된 부분
-
-  const fetchUserProfile = useCallback(async () => {
-    try {
-      const response = await axios.get(`${Config.API_URL_PAPAYATEST}/members`, {
-        params: {email: userEmail},
-      });
-      const member = response.data.find(m => m.email === userEmail);
-      if (member) {
-        setUserData(member);
-      } else {
-        Alert.alert('Error', 'Member not found');
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Failed to fetch member profile');
-    }
-  }, [userEmail]);
 
   useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${Config.API_URL_PAPAYATEST}/members`,
+        );
+        const members = response.data.find(
+          (members: any) => members.email === userEmail,
+        );
+        if (members) {
+          setUserData(members);
+        } else {
+          console.error('Members not found');
+          Alert.alert('Error', 'Members not found');
+        }
+      } catch (error) {
+        console.error('Failed to fetch members profile', error);
+        Alert.alert('Error', 'Failed to fetch members profile');
+      }
+    };
+
     fetchUserProfile();
-  }, [fetchUserProfile]);
+  }, [userEmail]);
 
   const navigateToEditName = () => {
     navigation.navigate('UserProfileEditName');
@@ -79,14 +80,7 @@ const UserProfile = () => {
   };
 
   return (
-    <ScrollView
-      style={styles.scrollView}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={() => onRefresh(fetchUserProfile)}
-        /> // 수정된 부분
-      }>
+    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.header}>User Profile</Text>
 

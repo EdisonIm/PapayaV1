@@ -19,7 +19,7 @@ interface ErrorResponse {
   message: string;
 }
 
-const LoginScreen = () => {
+const Login = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
@@ -163,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default Login;

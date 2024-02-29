@@ -16,7 +16,7 @@ import {useAppDispatch} from '../../src/store/index';
 import makersUserSlice from '../../src/slices/makersUser';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-type MakersLoginScreenProps = NativeStackScreenProps<
+type MakersLoginProps = NativeStackScreenProps<
   RootStackParamList,
   'MakersLogin'
 >;
@@ -25,7 +25,7 @@ interface ErrorResponse {
   message: string;
 }
 
-function MakersLogin({navigation}: MakersLoginScreenProps) {
+function MakersLogin({navigation}: MakersLoginProps) {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');

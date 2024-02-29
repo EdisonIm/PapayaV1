@@ -13,11 +13,15 @@ import Orders from './src/pages/Orders';
 import Delivery from './src/pages/Delivery';
 import Settings from './src/pages/Settings';
 import UserProfile from './src/pages/UserProfile/UserProfile';
+import UserProfileEdit from './src/pages/UserProfile/UserProfileEdit';
+import UserProfileEditImage from './src/pages/UserProfile/UserProfileEdit/UserProfileEditImage';
+import UserProfileEditName from './src/pages/UserProfile/UserProfileEdit/UserProfileEditName';
+import UserProfileEditPhoneNumber from './src/pages/UserProfile/UserProfileEdit/UserProfileEditPhoneNumber';
+import UserProfileEditAddress from './src/pages/UserProfile/UserProfileEdit/UserProfileEditAddress';
 // makers
 import MakersLogin from './srcMakers/makersPages/MakersLogin';
 import MakersProfile from './srcMakers/makersPages/MakersProfile';
 import MakersSignUp from './srcMakers/makersPages/MakersSignUp';
-import UserProfileEdit from './src/pages/UserProfile/UserProfileEdit';
 
 // Define param lists for navigation
 export type LoggedInParamList = {
@@ -36,6 +40,10 @@ export type RootStackParamList = {
   SignUp: undefined;
   MakersLogin: undefined;
   MakersSignUp: undefined;
+  UserProfileEditImage: undefined;
+  UserProfileEditName: undefined;
+  UserProfileEditPhoneNumber: undefined;
+  UserProfileEditAddress: undefined;
 };
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
@@ -51,11 +59,8 @@ function AppInner() {
   const [socket, disconnect] = useSocket();
 
   useEffect(() => {
-    // Handle socket connections and disconnections here
     if (socket && isLoggedIn) {
-      socket.emit('login', {
-        /* Your login data */
-      });
+      socket.emit('login', {});
       socket.on('data', data => {
         console.log(data);
       });
@@ -80,6 +85,26 @@ function AppInner() {
           name="UserProfileEdit"
           component={UserProfileEdit}
           options={{title: '내 정보 수정'}}
+        />
+        <Stack.Screen
+          name="UserProfileEditImage"
+          component={UserProfileEditImage}
+          options={{title: 'Edit Image'}}
+        />
+        <Stack.Screen
+          name="UserProfileEditName"
+          component={UserProfileEditName}
+          options={{title: 'Edit Name'}}
+        />
+        <Stack.Screen
+          name="UserProfileEditPhoneNumber"
+          component={UserProfileEditPhoneNumber}
+          options={{title: 'Edit Phone Number'}}
+        />
+        <Stack.Screen
+          name="UserProfileEditAddress"
+          component={UserProfileEditAddress}
+          options={{title: 'Edit Address'}}
         />
         <Tab.Screen
           name="Orders"

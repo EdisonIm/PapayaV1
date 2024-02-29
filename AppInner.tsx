@@ -13,7 +13,6 @@ import Orders from './src/pages/Orders';
 import Delivery from './src/pages/Delivery';
 import Settings from './src/pages/Settings';
 import UserProfile from './src/pages/UserProfile/UserProfile';
-import UserProfileEdit from './src/pages/UserProfile/UserProfileEdit';
 import UserProfileEditImage from './src/pages/UserProfile/UserProfileEdit/UserProfileEditImage';
 import UserProfileEditName from './src/pages/UserProfile/UserProfileEdit/UserProfileEditName';
 import UserProfileEditPhoneNumber from './src/pages/UserProfile/UserProfileEdit/UserProfileEditPhoneNumber';
@@ -26,7 +25,6 @@ import MakersSignUp from './srcMakers/makersPages/MakersSignUp';
 // Define param lists for navigation
 export type LoggedInParamList = {
   UserProfile: undefined;
-  UserProfileEdit: undefined;
   Orders: undefined;
   Settings: undefined;
   Delivery: undefined;
@@ -80,11 +78,6 @@ function AppInner() {
           name="UserProfile"
           component={UserProfile}
           options={{title: '내 정보'}}
-        />
-        <Tab.Screen
-          name="UserProfileEdit"
-          component={UserProfileEdit}
-          options={{title: '내 정보 수정'}}
         />
         <Stack.Screen
           name="UserProfileEditImage"

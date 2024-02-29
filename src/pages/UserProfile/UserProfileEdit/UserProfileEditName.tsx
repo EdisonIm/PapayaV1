@@ -33,10 +33,7 @@ const UserProfileEditName = () => {
         },
       );
       if (response.data.success) {
-        Alert.alert(
-          'Information Saved',
-          'Your name has been updated successfully.',
-        );
+        Alert.alert('성공!', '이름이 잘 저장되었습니다!');
         navigation.goBack(); // 성공 후 뒤로 가기
       } else {
         Alert.alert('Error', 'There was a problem updating your name.');

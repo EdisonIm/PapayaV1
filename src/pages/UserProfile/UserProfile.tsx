@@ -4,12 +4,12 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
-  Alert,
+  Button,
   Image,
   Dimensions,
-  Button,
   RefreshControl,
+  Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../../store/reducer';
@@ -19,27 +19,34 @@ import Config from 'react-native-config';
 import * as NavigationService from '../../utils/NavigationService';
 import {useNavigation} from '@react-navigation/native';
 import {useRefresh} from '../../utils/RefreshContext';
+import {useIsFocused} from '@react-navigation/native'; // 현재 화면의 포커스 상태를 확인하기 위해 추가
+
+const {width} = Dimensions.get('window');
+const DEFAULT_IMAGE_URI = 'https://example.com/default-image.jpg'; // 실제 사용하는 기본 이미지 URL로 변경
 
 interface UserData {
   name: string;
   id?: number;
   email?: string;
   phone?: string;
-  image?: string;
+  image?: {
+    key: string;
+    location: string;
+    name: string;
+  };
   zipCode?: string;
   address1?: string;
   address2?: string;
   address3?: string;
 }
 
-const {width} = Dimensions.get('window');
-
 const UserProfile = () => {
   const navigation = useNavigation();
   const userEmail = useSelector((state: RootState) => state.user.email);
-  const [userData, setUserData] = useState<UserData>({});
+  const [userData, setUserData] = useState<UserData | null>(null);
   const dispatch = useDispatch();
-  const {refreshing, onRefresh} = useRefresh(); // 추가된 부분
+  const {refreshing, onRefresh} = useRefresh();
+  const isFocused = useIsFocused(); // 현재 화면의 포커스 상태
 
   const fetchUserProfile = useCallback(async () => {
     try {
@@ -48,7 +55,18 @@ const UserProfile = () => {
       });
       const member = response.data.find(m => m.email === userEmail);
       if (member) {
-        setUserData(member);
+        const {name, phone, image, address} = member;
+        // address 객체에서 주소 정보 추출
+        const {zipCode, address1, address2, address3} = address || {};
+        setUserData({
+          name,
+          phone,
+          image,
+          zipCode,
+          address1,
+          address2,
+          address3,
+        });
       } else {
         Alert.alert('Error', 'Member not found');
       }
@@ -58,12 +76,11 @@ const UserProfile = () => {
   }, [userEmail]);
 
   useEffect(() => {
-    fetchUserProfile();
-  }, [fetchUserProfile]);
-
-  const navigateToEditName = () => {
-    navigation.navigate('UserProfileEditName');
-  };
+    if (isFocused || refreshing) {
+      // 화면이 포커스 되거나 새로고침이 요청될 때 사용자 정보를 다시 불러옵니다.
+      fetchUserProfile();
+    }
+  }, [fetchUserProfile, isFocused, refreshing]); // 의존성 배열에 isFocused와 refreshing 추가
 
   const handleLogout = () => {
     Alert.alert('Logout', 'Are you sure you want to logout?', [
@@ -82,37 +99,30 @@ const UserProfile = () => {
     <ScrollView
       style={styles.scrollView}
       refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={() => onRefresh(fetchUserProfile)}
-        /> // 수정된 부분
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
       <View style={styles.container}>
         <Text style={styles.header}>User Profile</Text>
 
         <View style={styles.imageContainer}>
-          {userData.image ? (
-            <Image
-              source={{uri: userData.image}}
-              style={styles.image}
-              resizeMode="cover"
-            />
-          ) : (
-            <Text style={styles.noImageText}>No image</Text>
-          )}
+          <Image
+            source={{uri: userData?.image?.location || DEFAULT_IMAGE_URI}}
+            style={styles.image}
+            resizeMode="cover"
+          />
           <Button
-            title="Edit1"
-            onPress={() => NavigationService.navigate('UserProfileEditImage')}
+            title="Edit Image"
+            onPress={() => navigation.navigate('UserProfileEditImage')}
           />
         </View>
 
         <View style={styles.infoContainer}>
           <Text style={styles.infoTitle}>Name:</Text>
           <Text style={styles.infoContent}>
-            {userData.name || 'No name provided'}
+            {userData?.name || 'No name provided'}
           </Text>
           <Button
-            title="EDIT"
+            title="Edit Name"
             onPress={() => navigation.navigate('UserProfileEditName')}
           />
         </View>
@@ -120,25 +130,21 @@ const UserProfile = () => {
         <View style={styles.infoContainer}>
           <Text style={styles.infoTitle}>Phone:</Text>
           <Text style={styles.infoContent}>
-            {userData.phone || 'No phone number provided'}
+            {userData?.phone || 'No phone number provided'}
           </Text>
           <Button
-            title="Edit3"
-            onPress={() =>
-              NavigationService.navigate('UserProfileEditPhoneNumber')
-            }
+            title="Edit Phone"
+            onPress={() => navigation.navigate('UserProfileEditPhoneNumber')}
           />
         </View>
 
         <View style={styles.infoContainer}>
           <Text style={styles.infoTitle}>Address:</Text>
           <Text style={styles.infoContent}>
-            {userData.zipCode ||
-            userData.address1 ||
-            userData.address2 ||
-            userData.address3
-              ? `${userData.zipCode} ${userData.address1} ${userData.address2} ${userData.address3}`
-              : 'No address provided'}
+            {userData?.zipCode && `${userData.zipCode}\n`}
+            {userData?.address1 && `${userData.address1}\n`}
+            {userData?.address2 && `${userData.address2}\n`}
+            {userData?.address3 || 'No address provided'}
           </Text>
           <Button
             title="Edit4"
@@ -167,25 +173,22 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   imageContainer: {
-    height: width / 3, // Make it a square
+    height: width / 3,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
-    backgroundColor: 'pink', // A light grey background
-    borderRadius: 10, // Optional: if you want rounded corners
+    backgroundColor: 'white',
+    borderRadius: 10,
   },
   image: {
     width: width / 3,
     height: width / 3,
     borderRadius: width / 6,
   },
-  noImageText: {
-    color: '#888',
-  },
   infoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 20,
   },
   infoTitle: {

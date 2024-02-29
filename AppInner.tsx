@@ -13,10 +13,10 @@ import Orders from './src/pages/Orders';
 import Delivery from './src/pages/Delivery';
 import Settings from './src/pages/Settings';
 import UserProfile from './src/pages/UserProfile/UserProfile';
-import UserProfileEditImage from './src/pages/UserProfile/UserProfileEdit/UserProfileEditImage';
 import UserProfileEditName from './src/pages/UserProfile/UserProfileEdit/UserProfileEditName';
 import UserProfileEditPhoneNumber from './src/pages/UserProfile/UserProfileEdit/UserProfileEditPhoneNumber';
 import UserProfileEditAddress from './src/pages/UserProfile/UserProfileEdit/UserProfileEditAddress';
+import ImageUploader from './src/pages/UserProfile/components/ImageUploader';
 // makers
 import MakersLogin from './srcMakers/makersPages/MakersLogin';
 import MakersProfile from './srcMakers/makersPages/MakersProfile';
@@ -38,10 +38,10 @@ export type RootStackParamList = {
   SignUp: undefined;
   MakersLogin: undefined;
   MakersSignUp: undefined;
-  UserProfileEditImage: undefined;
   UserProfileEditName: undefined;
   UserProfileEditPhoneNumber: undefined;
   UserProfileEditAddress: undefined;
+  ImageUploader: undefined;
 };
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
@@ -80,11 +80,6 @@ function AppInner() {
           options={{title: '내 정보'}}
         />
         <Stack.Screen
-          name="UserProfileEditImage"
-          component={UserProfileEditImage}
-          options={{title: 'Edit Image'}}
-        />
-        <Stack.Screen
           name="UserProfileEditName"
           component={UserProfileEditName}
           options={{title: 'Edit Name'}}
@@ -98,6 +93,11 @@ function AppInner() {
           name="UserProfileEditAddress"
           component={UserProfileEditAddress}
           options={{title: 'Edit Address'}}
+        />
+        <Stack.Screen
+          name="ImageUploader"
+          component={ImageUploader}
+          options={{title: 'ImageUploader'}}
         />
         <Tab.Screen
           name="Orders"

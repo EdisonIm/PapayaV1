@@ -1,3 +1,4 @@
+//모든 정보는 나오는데 무한루프가 해결 안됨
 import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
@@ -112,7 +113,7 @@ const UserProfile = () => {
           />
           <Button
             title="Edit Image"
-            onPress={() => navigation.navigate('UserProfileEditImage')}
+            onPress={() => navigation.navigate('ImageUploader', {userEmail})}
           />
         </View>
 

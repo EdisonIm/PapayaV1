@@ -1,16 +1,16 @@
-import React from 'react';
-import {Button, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {Button, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import useImageUpload from '../hooks/useImageUpload';
+import {StyleSheet} from 'react-native';
 
-// Props 타입은 그대로 유지
-interface ImageUploaderProps {
+const ImageUploader = ({
+  onImageUploaded,
+}: {
   onImageUploaded: (url: string) => void;
-}
-
-const ImageUploader: React.FC<ImageUploaderProps> = ({onImageUploaded}) => {
-  const {handleUploadImage, imageUrl, isUploading, setImage, uploadError} =
-    useImageUpload(onImageUploaded);
+}) => {
+  const {handleUploadImage, imageUrl, isUploading, setImage} = useImageUpload();
+  const [email, setEmail] = useState(''); // 추가된 상태
 
   const handleSelectPress = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
@@ -25,58 +25,64 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({onImageUploaded}) => {
     });
   };
 
-  // 수정된 부분: email 상태 관리 삭제, handleUploadImage 호출 시 email 인자 삭제
   const handleUploadPress = async () => {
-    await handleUploadImage();
+    await handleUploadImage(email); // 수정된 부분: 이메일 상태를 사용
+    if (imageUrl) {
+      onImageUploaded(imageUrl);
+    }
   };
 
   return (
     <View style={styles.container}>
-      {/* 이메일 입력 필드 삭제 */}
-      <TouchableOpacity onPress={handleSelectPress} style={styles.button}>
-        <Text style={styles.buttonText}>사진 선택하기</Text>
+      <TextInput
+        placeholder="이메일 주소 입력"
+        value={email}
+        onChangeText={setEmail}
+        style={styles.textInput}
+        keyboardType="email-address" // 이메일 입력을 위한 키보드 타입 설정
+        autoCapitalize="none" // 자동 대문자 변환 비활성화
+      />
+      <TouchableOpacity onPress={handleSelectPress}>
+        <Text style={styles.label}>사진 선택하기(누르셈^_^)</Text>
       </TouchableOpacity>
       <Button
         onPress={handleUploadPress}
         title="사진 올리기"
-        disabled={isUploading}
+        disabled={isUploading || !email} // 이메일이 없을 때 업로드 버튼 비활성화
       />
-      {isUploading ? <Text>업로드 중...</Text> : null}
-      {imageUrl ? <Text>업로드 완료: {imageUrl}</Text> : null}
-      {uploadError ? <Text style={styles.errorText}>{uploadError}</Text> : null}
+      {isUploading ? (
+        <Text>업로드 중...^_^;;</Text>
+      ) : imageUrl ? (
+        <Text>업로드 완료!! : {imageUrl}</Text>
+      ) : null}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 7,
+    backgroundColor: 'pink',
     alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20, // 조정된 스타일
   },
   textInput: {
-    width: '100%',
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
+    height: 40, // 높이 설정
+    marginVertical: 10, // 위아래 마진 추가
+    width: '80%', // 넓이 설정
+    borderColor: 'gray', // 테두리 색상
+    borderWidth: 1, // 테두리 두께
+    paddingHorizontal: 10, // 내부 좌우 패딩
   },
-  button: {
-    backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  buttonText: {
-    color: 'white',
+  label: {
     fontWeight: 'bold',
+    fontSize: 20, // 글씨 크기 조정
+    color: 'red', // 글씨 색상 변경
+    marginVertical: 10, // 위아래 마진 추가
   },
-  errorText: {
-    color: 'red',
-    marginTop: 10,
+  buttonZone: {
+    alignItems: 'center',
+    marginTop: 20, // 버튼 위의 마진 추가
   },
 });
 

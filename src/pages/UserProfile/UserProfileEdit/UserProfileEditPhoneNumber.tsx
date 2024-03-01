@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {TextInput, Button, StyleSheet, Alert, ScrollView} from 'react-native';
+import {
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/reducer';
 import axios from 'axios';
@@ -34,14 +41,23 @@ const UserProfileEditPhoneNumber = () => {
         placeholder="새 전화번호 입력"
         keyboardType="phone-pad"
       />
-      <Button title="전화번호 저장" onPress={handleSavePhoneNumber} />
+      <Button title="Save Number" onPress={handleSavePhoneNumber} />
     </ScrollView>
   );
 };
 
+const {width} = Dimensions.get('window');
+
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: '#F5F5F5',
+  },
   container: {
-    padding: 20,
+    flex: 1,
+    paddingHorizontal: width * 0.025,
+    paddingTop: 20,
+    paddingBottom: 50,
   },
   input: {
     backgroundColor: '#FFFFFF',
@@ -51,6 +67,19 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 15,
     fontSize: 16,
+  },
+  button: {
+    backgroundColor: '#4e9af1',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

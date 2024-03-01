@@ -25,10 +25,10 @@ const AddressUploader: React.FC<AddressUploaderProps> = ({userEmail}) => {
         address2,
         address3,
       });
-      Alert.alert('Success!', 'Address successfully updated!');
+      Alert.alert('성공!', '주소가 성공적으로 등록되었습니다!');
     } catch (axiosError) {
       const e = axiosError as AxiosError;
-      let errorMessage = 'Failed to update address. Please try again.';
+      let errorMessage = '주소 업로드에 실패했습니다. 다시 시도해주세요.';
       if (e.response) {
         errorMessage += `\nError Status Code: ${e.response.status}`;
       } else if (e.request) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Button, StyleSheet, Alert} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-import useImageUpload from '../hooks/useImageUpload';
+import useImageUpload from '../../hooks/useImageUpload';
 
 const UserProfileEditImage = () => {
   const {handleUploadImage, imageUrl, isUploading, setImage, uploadError} =

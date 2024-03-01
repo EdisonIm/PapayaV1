@@ -12,7 +12,7 @@ interface ImageUploaderProps {
 const ImageUploader: React.FC<ImageUploaderProps> = ({onImageUploaded}) => {
   const userEmail = useSelector((state: RootState) => state.user.email);
   const {handleUploadImage, imageUrl, isUploading, setImage, uploadError} =
-    useImageUpload(onImageUploaded, userEmail);
+    useImageUpload(onImageUploaded);
 
   const handleSelectPress = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
@@ -24,15 +24,18 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({onImageUploaded}) => {
 
   return (
     <View style={styles.container}>
-      {/* 이메일 입력 필드 관련 코드 제거 */}
       <TouchableOpacity onPress={handleSelectPress} style={styles.button}>
         <Text style={styles.buttonText}>사진 선택하기</Text>
       </TouchableOpacity>
-      <Button
-        onPress={() => handleUploadImage(userEmail)} // 수정된 부분
-        title="사진 올리기"
-        disabled={isUploading}
-      />
+      <TouchableOpacity
+        onPress={() => handleUploadImage(userEmail)}
+        style={[styles.button, {opacity: isUploading ? 0.5 : 1}, {backgroundColor: 'orange'}]} // 업로드 중인 상태를 시각적으로 표현
+        disabled={isUploading} // TouchableOpacity에는 disabled 속성이 없으므로, 실제 비활성화 기능을 구현하려면 추가 로직 필요
+      >
+        <Text style={styles.buttonText}>
+          {isUploading ? '업로드 중...' : '사진 올리기'}
+        </Text>
+      </TouchableOpacity>
       {isUploading && <Text>업로드 중...</Text>}
       {imageUrl && <Text>업로드 완료: {imageUrl}</Text>}
       {uploadError && <Text style={styles.errorText}>{uploadError}</Text>}
@@ -58,13 +61,19 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
+    width: '100%',
+    height: 55,
+    paddingVertical: 10,
+    borderRadius: 50,
+    marginTop: 30,
+    marginVertical: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 20,
   },
   errorText: {
     color: 'red',

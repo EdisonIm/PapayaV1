@@ -103,12 +103,19 @@ const UserProfile = () => {
         <Text style={styles.header}>User Profile</Text>
 
         <TouchableOpacity
-          style={styles.imageContainer}
+          style={[
+            styles.imageContainer,
+            !userData?.image?.location && styles.noImageContainer,
+          ]}
           onPress={() => navigation.navigate('ImageUploader', {userEmail})}>
-          <Image
-            source={{uri: userData?.image?.location || DEFAULT_IMAGE_URI}}
-            style={styles.image}
-          />
+          {userData?.image?.location ? (
+            <Image
+              source={{uri: userData.image.location}}
+              style={styles.image}
+            />
+          ) : (
+            <Text style={styles.noImageText}>이미지 등록</Text>
+          )}
         </TouchableOpacity>
 
         <View style={styles.infoSection}>
@@ -117,7 +124,7 @@ const UserProfile = () => {
             style={styles.infoContent}
             onPress={() => navigation.navigate('UserProfileEditName')}>
             <Text style={styles.infoValue}>
-              {userData?.name || 'No name provided'}
+              {userData?.name || '이름을 등록해주세요!'}
             </Text>
             <Text style={styles.editIcon}>▶</Text>
           </TouchableOpacity>
@@ -129,7 +136,7 @@ const UserProfile = () => {
             style={styles.infoContent}
             onPress={() => navigation.navigate('UserProfileEditPhoneNumber')}>
             <Text style={styles.infoValue}>
-              {userData?.phone || 'No phone number provided'}
+              {userData?.phone || '전화번호를 등록해주세요!'}
             </Text>
             <Text style={styles.editIcon}>▶</Text>
           </TouchableOpacity>
@@ -144,7 +151,7 @@ const UserProfile = () => {
               {userData?.zipCode && `${userData.zipCode}\n`}
               {userData?.address1 && `${userData.address1}\n`}
               {userData?.address2 && `${userData.address2}\n`}
-              {userData?.address3 || 'No address provided'}
+              {userData?.address3 || '주소를 등록해주세요!'}
             </Text>
             <Text style={styles.editIcon}>▶</Text>
           </TouchableOpacity>
@@ -173,7 +180,22 @@ const styles = StyleSheet.create({
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginVertical: 20,
+    marginBottom: 40,
+  },
+  noImageContainer: {
+    width: width / 3,
+    height: width / 3,
+    borderRadius: width / 6,
+    alignSelf: 'center',
+    marginVertical: 20,
+    marginBottom: 40,
+    backgroundColor: 'white', // 이미지가 없을 때의 배경색
+    borderColor: 'grey',
+  },
+  noImageText: {
+    fontSize: 18,
+    color: 'pink',
   },
   image: {
     width: width / 3,

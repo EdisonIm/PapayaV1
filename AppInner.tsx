@@ -77,7 +77,7 @@ function AppInner() {
         <Tab.Screen
           name="UserProfile"
           component={UserProfile}
-          options={{title: '내 정보'}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="UserProfileEditName"

@@ -9,18 +9,18 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MainPage from './src/pages/MainPage';
 import Login from './src/pages/Login';
 import SignUp from './src/pages/SignUp';
-import Orders from './src/pages/Orders';
-import Delivery from './src/pages/Delivery';
-import Settings from './src/pages/Settings';
+//import Orders from './src/pages/Orders';
+//import Delivery from './src/pages/Delivery';
+//import Settings from './src/pages/Settings';
 import UserProfile from './src/pages/UserProfile/UserProfile';
 import UserProfileEditName from './src/pages/UserProfile/UserProfileEdit/UserProfileEditName';
 import UserProfileEditPhoneNumber from './src/pages/UserProfile/UserProfileEdit/UserProfileEditPhoneNumber';
 import UserProfileEditAddress from './src/pages/UserProfile/UserProfileEdit/UserProfileEditAddress';
 import ImageUploader from './src/pages/UserProfile/components/ImageUploader';
-// makers
 import MakersLogin from './srcMakers/makersPages/MakersLogin';
 import MakersProfile from './srcMakers/makersPages/MakersProfile';
 import MakersSignUp from './srcMakers/makersPages/MakersSignUp';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Define param lists for navigation
 export type LoggedInParamList = {
@@ -99,7 +99,7 @@ function AppInner() {
           component={ImageUploader}
           options={{title: 'ImageUploader'}}
         />
-        <Tab.Screen
+        {/*<Tab.Screen
           name="Orders"
           component={Orders}
           options={{title: '오더 목록'}}
@@ -113,7 +113,7 @@ function AppInner() {
           name="Settings"
           component={Settings}
           options={{title: '설정'}}
-        />
+    />*/}
         {isMakersLoggedIn && (
           <Tab.Screen
             name="MakersProfile"

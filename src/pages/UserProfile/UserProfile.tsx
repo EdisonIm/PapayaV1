@@ -206,19 +206,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 22,
     alignItems: 'flex-start',
   },
   infoLabel: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   infoContent: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 7,
   },
   infoValue: {
-    fontSize: 16,
+    fontSize: 18,
+    marginRight: 25,
+    textAlign: 'right',
   },
   editIcon: {
     marginLeft: 5,

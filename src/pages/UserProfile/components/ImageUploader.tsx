@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import useImageUpload from '../hooks/useImageUpload';
 import {useSelector} from 'react-redux';
-import {RootState} from '../../../store/reducer'; // 경로는 실제 프로젝트에 맞게 조정해주세요.
+import {RootState} from '../../../store/reducer';
 
 interface ImageUploaderProps {
   onImageUploaded: (url: string) => void;
@@ -29,9 +29,12 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({onImageUploaded}) => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => handleUploadImage(userEmail)}
-        style={[styles.button, {opacity: isUploading ? 0.5 : 1}, {backgroundColor: 'orange'}]} // 업로드 중인 상태를 시각적으로 표현
-        disabled={isUploading} // TouchableOpacity에는 disabled 속성이 없으므로, 실제 비활성화 기능을 구현하려면 추가 로직 필요
-      >
+        style={[
+          styles.button,
+          {opacity: isUploading ? 0.5 : 1},
+          {backgroundColor: 'orange'},
+        ]}
+        disabled={isUploading}>
         <Text style={styles.buttonText}>
           {isUploading ? '업로드 중...' : '사진 올리기'}
         </Text>

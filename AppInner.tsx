@@ -7,8 +7,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // Import pages
 import MainPage from './src/pages/MainPage';
-import Login from './src/pages/Login';
-import SignUp from './src/pages/SignUp';
+import Login from './src/pages/Login/Login';
+import SignUp from './src/pages/SignUp/SignUp';
 //import Orders from './src/pages/Orders';
 //import Delivery from './src/pages/Delivery';
 //import Settings from './src/pages/Settings';

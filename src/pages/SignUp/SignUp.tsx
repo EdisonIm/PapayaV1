@@ -9,10 +9,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import DismissKeyboardView from '../components/DissmisKeyboardView';
+import DismissKeyboardView from '../../components/DissmisKeyboardView';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
-import {RootStackParamList} from '../../AppInner';
+import {RootStackParamList} from '../../../AppInner';
 
 type LoginProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 

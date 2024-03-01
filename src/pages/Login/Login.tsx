@@ -9,11 +9,11 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native'; // 변경된 부분: useNavigation 훅 사용
-import {useAppDispatch} from '../store';
-import userSlice from '../slices/user';
+import {useAppDispatch} from '../../store';
+import userSlice from '../../slices/user';
 import axios, {AxiosError} from 'axios';
 import Config from 'react-native-config';
-import {RootStackParamList} from '../../AppInner';
+import {RootStackParamList} from '../../../AppInner';
 
 interface ErrorResponse {
   message: string;

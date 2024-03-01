@@ -13,14 +13,13 @@ import SignUp from './src/pages/SignUp';
 //import Delivery from './src/pages/Delivery';
 //import Settings from './src/pages/Settings';
 import UserProfile from './src/pages/UserProfile/UserProfile';
-import UserProfileEditName from './src/pages/UserProfile/UserProfileEdit/UserProfileEditName';
-import UserProfileEditPhoneNumber from './src/pages/UserProfile/UserProfileEdit/UserProfileEditPhoneNumber';
-import UserProfileEditAddress from './src/pages/UserProfile/UserProfileEdit/UserProfileEditAddress';
+import NameUploader from './src/pages/UserProfile/components/NameUploader';
+import PhoneNumberUploader from './src/pages/UserProfile/components/PhoneNumberUploader';
+import AddressUploader from './src/pages/UserProfile/components/AddressUploader';
 import ImageUploader from './src/pages/UserProfile/components/ImageUploader';
 import MakersLogin from './srcMakers/makersPages/MakersLogin';
 import MakersProfile from './srcMakers/makersPages/MakersProfile';
 import MakersSignUp from './srcMakers/makersPages/MakersSignUp';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Define param lists for navigation
 export type LoggedInParamList = {
@@ -38,10 +37,13 @@ export type RootStackParamList = {
   SignUp: undefined;
   MakersLogin: undefined;
   MakersSignUp: undefined;
-  UserProfileEditName: undefined;
-  UserProfileEditPhoneNumber: undefined;
-  UserProfileEditAddress: undefined;
-  ImageUploader: undefined;
+  NameUploader: undefined;
+  PhoneNumberUploader: undefined;
+  AddressUploader: undefined;
+  ImageUploader: {
+    userEmail: string;
+    onImageUploaded?: (url: string) => void; // 선택적으로 onImageUploaded 함수 포함
+  };
 };
 
 const Tab = createBottomTabNavigator<LoggedInParamList>();
@@ -80,25 +82,29 @@ function AppInner() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="UserProfileEditName"
-          component={UserProfileEditName}
+          name="NameUploader"
+          component={NameUploader}
           options={{title: 'Edit Name'}}
         />
         <Stack.Screen
-          name="UserProfileEditPhoneNumber"
-          component={UserProfileEditPhoneNumber}
+          name="PhoneNumberUploader"
+          component={PhoneNumberUploader}
           options={{title: 'Edit Phone Number'}}
         />
         <Stack.Screen
-          name="UserProfileEditAddress"
-          component={UserProfileEditAddress}
+          name="AddressUploader"
+          component={AddressUploader}
           options={{title: 'Edit Address'}}
         />
-        <Stack.Screen
-          name="ImageUploader"
-          component={ImageUploader}
-          options={{title: 'ImageUploader'}}
-        />
+        <Stack.Screen name="ImageUploader" options={{title: 'ImageUploader'}}>
+          {props => (
+            <ImageUploader
+              userEmail={''}
+              {...props}
+              onImageUploaded={url => console.log(url)}
+            />
+          )}
+        </Stack.Screen>
         {/*<Tab.Screen
           name="Orders"
           component={Orders}

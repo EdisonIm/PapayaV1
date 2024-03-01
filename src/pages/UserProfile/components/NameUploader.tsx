@@ -15,7 +15,7 @@ import axios from 'axios';
 import Config from 'react-native-config';
 import {useNavigation} from '@react-navigation/native';
 
-const UserProfileEditName = () => {
+const NameUploader = () => {
   const userEmail = useSelector((state: RootState) => state.user.email);
   const [name, setName] = useState('');
   const navigation = useNavigation();
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserProfileEditName;
+export default NameUploader;

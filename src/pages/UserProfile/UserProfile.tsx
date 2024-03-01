@@ -15,13 +15,14 @@ import {RootState} from '../../store/reducer';
 import {logout} from '../../slices/user';
 import axios from 'axios';
 import Config from 'react-native-config';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, NavigationProp} from '@react-navigation/native';
 import {useRefresh} from '../../utils/RefreshContext';
 import {useIsFocused} from '@react-navigation/native';
 import * as NavigationService from '../../utils/NavigationService';
+import {RootStackParamList} from '../../../AppInner';
 
 const {width} = Dimensions.get('window');
-const DEFAULT_IMAGE_URI = 'https://example.com/default-image.jpg';
+//const DEFAULT_IMAGE_URI = 'https://example.com/default-image.jpg';
 
 interface UserData {
   name: string;
@@ -40,11 +41,11 @@ interface UserData {
 }
 
 const UserProfile = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const userEmail = useSelector((state: RootState) => state.user.email);
   const [userData, setUserData] = useState<UserData | null>(null);
   const dispatch = useDispatch();
-  const {refreshing, onRefresh} = useRefresh();
+  const {refreshing} = useRefresh();
   const isFocused = useIsFocused();
 
   const fetchUserProfile = useCallback(async () => {
@@ -52,7 +53,9 @@ const UserProfile = () => {
       const response = await axios.get(`${Config.API_URL_PAPAYATEST}/members`, {
         params: {email: userEmail},
       });
-      const member = response.data.find(m => m.email === userEmail);
+      const member = response.data.find(
+        (m: {email: string}) => m.email === userEmail,
+      );
       if (member) {
         const {name, phone, image, address} = member;
         // address 객체에서 주소 정보 추출
@@ -97,7 +100,12 @@ const UserProfile = () => {
     <ScrollView
       style={styles.scrollView}
       refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={() => {
+            fetchUserProfile();
+          }}
+        />
       }>
       <View style={styles.container}>
         <Text style={styles.header}>User Profile</Text>
@@ -122,7 +130,7 @@ const UserProfile = () => {
           <Text style={styles.infoLabel}>Name:</Text>
           <TouchableOpacity
             style={styles.infoContent}
-            onPress={() => navigation.navigate('UserProfileEditName')}>
+            onPress={() => navigation.navigate('NameUploader')}>
             <Text style={styles.infoValue}>
               {userData?.name || '이름을 등록해주세요!'}
             </Text>
@@ -134,7 +142,7 @@ const UserProfile = () => {
           <Text style={styles.infoLabel}>Phone:</Text>
           <TouchableOpacity
             style={styles.infoContent}
-            onPress={() => navigation.navigate('UserProfileEditPhoneNumber')}>
+            onPress={() => navigation.navigate('PhoneNumberUploader')}>
             <Text style={styles.infoValue}>
               {userData?.phone || '전화번호를 등록해주세요!'}
             </Text>
@@ -146,7 +154,7 @@ const UserProfile = () => {
           <Text style={styles.infoLabel}>Address:</Text>
           <TouchableOpacity
             style={styles.infoContent}
-            onPress={() => navigation.navigate('UserProfileEditAddress')}>
+            onPress={() => navigation.navigate('AddressUploader')}>
             <Text style={styles.infoValue}>
               {userData?.zipCode && `${userData.zipCode}\n`}
               {userData?.address1 && `${userData.address1}\n`}
@@ -205,9 +213,8 @@ const styles = StyleSheet.create({
   infoSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 22,
     alignItems: 'flex-start',
+    marginBottom: 22,
   },
   infoLabel: {
     fontSize: 20,

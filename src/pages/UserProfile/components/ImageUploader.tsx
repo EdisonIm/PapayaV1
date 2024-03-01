@@ -2,15 +2,17 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import useImageUpload from '../hooks/useImageUpload';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../../store/reducer';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../../../../AppInner';
 
 interface ImageUploaderProps {
+  userEmail: string;
   onImageUploaded: (url: string) => void;
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({onImageUploaded}) => {
-  const userEmail = useSelector((state: RootState) => state.user.email);
+  const route = useRoute<RouteProp<RootStackParamList, 'ImageUploader'>>();
+  const {userEmail} = route.params;
   const {handleUploadImage, imageUrl, isUploading, setImage, uploadError} =
     useImageUpload(onImageUploaded);
 

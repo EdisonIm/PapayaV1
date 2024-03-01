@@ -13,7 +13,7 @@ import axios from 'axios';
 import Config from 'react-native-config';
 import {useNavigation} from '@react-navigation/native';
 
-const UserProfileEditPhoneNumber = () => {
+const PhoneNumberUploader = () => {
   const userEmail = useSelector((state: RootState) => state.user.email);
   const [phoneNumber, setPhoneNumber] = useState('');
   const navigation = useNavigation();
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserProfileEditPhoneNumber;
+export default PhoneNumberUploader;

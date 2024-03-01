@@ -1,4 +1,3 @@
-// UserProfileEditAddress.js
 import React, {useState} from 'react';
 import {
   View,
@@ -14,7 +13,7 @@ import {useSelector} from 'react-redux';
 import {RootState} from '../../../store/reducer';
 import {useNavigation} from '@react-navigation/native';
 
-const UserProfileEditAddress = () => {
+const AddressUploader = () => {
   const userEmail = useSelector((state: RootState) => state.user.email);
   const [zipCode, setZipCode] = useState('');
   const [address1, setAddress1] = useState('');
@@ -104,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserProfileEditAddress;
+export default AddressUploader;

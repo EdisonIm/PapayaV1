@@ -1,12 +1,5 @@
 import React, {SetStateAction, useEffect} from 'react';
-import {
-  Linking,
-  Platform,
-  PermissionsAndroid,
-  Alert,
-  View,
-  Pressable,
-} from 'react-native';
+import {Linking, Platform, PermissionsAndroid, Alert} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {Shadow} from 'react-native-shadow-2';
 import Icon from '../../assets/icons/Map/location.svg';
@@ -78,7 +71,7 @@ const Component = ({setInitCenter}: IProps) => {
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           title: '커런트',
-          message: `'정확한 위치' 접근 권한을 허용해 주세요`,
+          message: "'정확한 위치' 접근 권한을 허용해 주세요",
           buttonNeutral: '다음에 다시 묻기',
           buttonNegative: '취소',
           buttonPositive: '확인',
@@ -117,7 +110,7 @@ const Component = ({setInitCenter}: IProps) => {
   //   }, [from]);
   useEffect(() => {
     userLocation();
-  }, []);
+  });
 
   return (
     <Wrap onPress={userLocation}>
@@ -140,10 +133,6 @@ const Wrap = styled.Pressable`
   align-items: center;
   justify-content: space-between;
   background-color: white; */
-`;
-
-const LocationText = styled(Typography).attrs({text: 'Body06R'})`
-  color: ${({theme}) => theme.colors.gray[2]};
 `;
 
 const LocationIcon = styled.View`

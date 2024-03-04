@@ -1,5 +1,3 @@
-import instance from '../../utils/instance';
-
 const id = 'ieb9w2oo8h';
 const key = 'fsGS0hLBYiw6ZJCPjamikcfT13I0Tq8hNmg4dXSl';
 const kakaoKey = 'f21533176fe107f543e4c03040a2f6e3';

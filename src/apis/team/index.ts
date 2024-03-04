@@ -1,5 +1,5 @@
 import instance from '../../utils/instance';
-import { tApiPostDefault, tApidefault } from '../../utils/types/apiType';
+import {tApiPostDefault, tApidefault} from '../../utils/types/apiType';
 import {
   tMyTeamList,
   tTeamDetailInfo,
@@ -35,12 +35,13 @@ export const teamApi: ITeamApiProps = {
     await instance.get(
       `/team/location?latitude=${latitude}&longitude=${longitude}`,
     ),
-  patchTeam: async params => await instance.patch(`team`, params),
-  createTeam: async params => await instance.post('/team', params, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  }),
+  patchTeam: async params => await instance.patch('team', params),
+  createTeam: async params =>
+    await instance.post('/team', params, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
   getMyTeamList: async userId =>
     await instance.get(`team-member?userId=${userId}`),
   getMakersList: async (lat, lng) =>

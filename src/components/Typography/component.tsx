@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styled, { css, useTheme } from 'styled-components/native';
-import { optionStyles, textStyles, variantStyles, weightStyles } from './styles';
-import { TouchableOpacity, View } from 'react-native';
+import React, {useState} from 'react';
+import styled, {css, useTheme} from 'styled-components/native';
+import {optionStyles, textStyles, variantStyles, weightStyles} from './styles';
+import {TouchableOpacity} from 'react-native';
 
 interface ITypograhpyProps {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ interface ITypograhpyProps {
 }
 
 const Component: React.FunctionComponent<ITypograhpyProps> = props => {
-  const { children, maxChars } = props;
+  const {children, maxChars} = props;
   const [isTruncated, setIsTruncated] = useState<boolean>(true);
   const themeApp = useTheme();
   const textChild = props.children as string;
@@ -37,8 +37,7 @@ const Component: React.FunctionComponent<ITypograhpyProps> = props => {
       text={props.text}
       ellipsizeMode={props.ellipsizeMode}
       textColor={props.textColor}
-      {...props}
-    >
+      {...props}>
       {maxChars && textChild.length > maxChars && isTruncated
         ? `${textChild.slice(0, maxChars)}...`
         : children}
@@ -52,8 +51,7 @@ const Component: React.FunctionComponent<ITypograhpyProps> = props => {
               position: 'absolute',
               bottom: -4,
               left: !isTruncated ? 5 : 0,
-            }}
-          >
+            }}>
             {isTruncated ? '더보기' : '접기'}
           </Typograhpy>
         </TouchableOpacity>
@@ -70,18 +68,20 @@ const Typograhpy = styled.Text<ITypograhpyProps>`
   padding: 0px;
   display: flex;
   flex-wrap: wrap;
-  ${({ variant }) => variant && variantStyles[variant]};
-  ${({ option }) => option && optionStyles[option]}
-  ${({ weight }) => weight && weightStyles[weight]};
-  ${({ text }) => text && textStyles[text]};
-  ${({ align }) =>
+  ${({variant}) => variant && variantStyles[variant]};
+  ${({option}) => option && optionStyles[option]}
+  ${({weight}) => weight && weightStyles[weight]};
+  ${({text}) => text && textStyles[text]};
+  ${({align}) =>
     align &&
     css`
       text-align: ${align};
     `};
 
-  ${({ textColor }) => {
-    if (!textColor) return null;
+  ${({textColor}) => {
+    if (!textColor) {
+      return null;
+    }
 
     const isNeedNotProperty = Array.isArray(textColor);
     return isNeedNotProperty

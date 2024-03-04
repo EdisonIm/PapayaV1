@@ -126,11 +126,12 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
     suffixContent = (
       <TouchableOpacity
         onPress={() => {
-          console.log(name, data)
+          console.log(name, data);
           resetField(name);
-          if (inputRef !== null) inputRef.current?.focus();
-        }}
-      >
+          if (inputRef !== null) {
+            inputRef.current?.focus();
+          }
+        }}>
         <AntDesignIcon name="closecircle" />
       </TouchableOpacity>
     );
@@ -142,8 +143,7 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
       <TouchableOpacity
         onPress={() => {
           setIsShowing(!isShowing);
-        }}
-      >
+        }}>
         {isShowing ? <EyeOn /> : <EyeOff />}
       </TouchableOpacity>
     );
@@ -155,8 +155,8 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
     setTimer(prev => ({...prev, isRunning: true, firstRunning: true}));
   }
   useEffect(() => {
-    console.log(data)
-  }, [data])
+    console.log(data);
+  }, [data]);
   useEffect(() => {
     if (timer.isRunning) {
       const timerId = setTimeout(() => {
@@ -178,7 +178,7 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
       control={control}
       rules={rules}
       defaultValue={defaultValue && defaultValue}
-      render={({ field: { onChange, onBlur } }) => {
+      render={({field: {onChange, onBlur}}) => {
         const regExp = /[^0-9]/g;
         const redTimerConditiion =
           // suffix?.timer &&
@@ -193,8 +193,7 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
                     errors[name]
                       ? themeApp.colors.error
                       : themeApp.colors.gray[5]
-                  }
-                >
+                  }>
                   {label}
                 </Typography>
               </LabelContainer>
@@ -211,7 +210,10 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
                   paddings={padding && padding}
                   suffix={!!suffixContent}
                   timer={timer.remainTime > 0}
-                  value={data && (type === "numeric" ? data.replace(regExp, "") : data)}
+                  value={
+                    data &&
+                    (type === 'numeric' ? data.replace(regExp, '') : data)
+                  }
                   secureTextEntry={isPassword ? !isShowing : false}
                 />
               </InputContainer>
@@ -227,13 +229,11 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
                   {timer.remainTime > 0 && timer.isRunning && (
                     <TimerContainer
                       timer={timer.remainTime > 0}
-                      isAuth={suffix && suffix.isAuth}
-                    >
+                      isAuth={suffix && suffix.isAuth}>
                       <Typography
                         variant="h600"
                         weight="R"
-                        textColor={timer.remainTime > 0 ? undefined : 'red'}
-                      >
+                        textColor={timer.remainTime > 0 ? undefined : 'red'}>
                         {timer.isRunning
                           ? formattedTimer(timer.remainTime)
                           : '00:00'}
@@ -251,8 +251,7 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
 
                   <SuffixContainer
                     suffix={!!suffixContent}
-                    isAuth={suffix && suffix.isAuth}
-                  >
+                    isAuth={suffix && suffix.isAuth}>
                     {suffixContent}
                   </SuffixContainer>
                 </>
@@ -282,8 +281,7 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
                         setIsDisabled(false);
                       }, 2000);
                     }
-                  }}
-                >
+                  }}>
                   <Typography
                     text={'Button10SB'}
                     textColor={
@@ -294,8 +292,7 @@ const RefTextInput = forwardRef<TextInput, ITextInputProps>((props, ref) => {
                         : watch(name)
                         ? themeApp.colors.gray[3]
                         : themeApp.colors.gray[6]
-                    }
-                  >
+                    }>
                     {suffix && suffix.authText}
                   </Typography>
                 </AuthenticationButton>

@@ -39,9 +39,6 @@ const Component = ({modalVisible, setModalVisible, data, isMember}: IProps) => {
   const snapPoints = useMemo(() => [size, size], []);
 
   // callbacks
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
 
   const onPressEntryButton = async () => {
     await entryRoom({

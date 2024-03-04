@@ -1,11 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import {
-  StyleSheet,
-  Text,
-  Animated,
-  Easing,
-} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {StyleSheet, Text, Animated, Easing} from 'react-native';
 import Touchable from './Touchable';
 
 interface FABProps {
@@ -66,8 +60,7 @@ const styles = StyleSheet.create({
 
 const Component: React.FC<FABProps> = ({
   buttonColor = 'red',
-  iconTextColor = '#FFFFFF',
-  onClickAction = () => { },
+  onClickAction = () => {},
   iconTextComponent = <Text>+</Text>,
   visible = true,
   snackOffset = 0,
@@ -143,28 +136,26 @@ const Component: React.FC<FABProps> = ({
   });
 
   return (
-    <Animated.View style={[styles.fabContainer, { bottom: shiftValue }]}>
+    <Animated.View style={[styles.fabContainer, {bottom: shiftValue}]}>
       <Animated.View
         style={[
-          styles.addButton, {
+          styles.addButton,
+          {
             height: dimensionInterpolate,
             width: dimensionInterpolate,
           },
-        ]}
-      >
+        ]}>
         <Touchable
           onPress={onClickAction}
           style={[styles.addButtonInnerContainer, style]}
-          buttonColor={buttonColor}
-        >
+          buttonColor={buttonColor}>
           <Animated.View
             style={{
               transform: [
-                { scaleX: translateValue },
-                { rotate: rotateInterpolate },
+                {scaleX: translateValue},
+                {rotate: rotateInterpolate},
               ],
-            }}
-          >
+            }}>
             {iconTextComponent}
           </Animated.View>
         </Touchable>

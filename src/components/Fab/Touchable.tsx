@@ -1,24 +1,13 @@
-import React, { ReactNode } from 'react';
-import PropTypes from 'prop-types';
-import {
-  View,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  StyleProp,
-  Pressable,
-} from 'react-native';
-import {
-  IS_ANDROID,
-  IS_LT_LOLLIPOP,
-  noop,
-} from './utils';
-import { StyleProps } from 'react-native-reanimated';
+import React, {ReactNode} from 'react';
+import {View, TouchableNativeFeedback, Pressable} from 'react-native';
+import {IS_ANDROID, IS_LT_LOLLIPOP} from './utils';
+import {StyleProps} from 'react-native-reanimated';
 
 interface ITouchableProps {
   onPress: () => void;
   style: StyleProps;
   buttonColor: string;
-  children: ReactNode,
+  children: ReactNode;
 }
 const Touchable = ({
   onPress,
@@ -30,15 +19,14 @@ const Touchable = ({
     return (
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.SelectableBackgroundBorderless()}
-        onPress={onPress}
-      >
+        onPress={onPress}>
         <View
           style={[
-            style, {
+            style,
+            {
               backgroundColor: buttonColor,
             },
-          ]}
-        >
+          ]}>
           {children}
         </View>
       </TouchableNativeFeedback>
@@ -49,16 +37,14 @@ const Touchable = ({
     <Pressable
       onPress={onPress}
       style={[
-        style, {
+        style,
+        {
           backgroundColor: buttonColor,
         },
-      ]}
-    >
+      ]}>
       {children}
     </Pressable>
   );
 };
-
-
 
 export default Touchable;

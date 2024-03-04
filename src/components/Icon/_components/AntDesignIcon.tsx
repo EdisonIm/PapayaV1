@@ -1,6 +1,6 @@
 import React from 'react';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import { useTheme } from 'styled-components/native';
+import {useTheme} from 'styled-components/native';
 
 import IconWrapper from '../component';
 
@@ -10,7 +10,7 @@ interface IIconProps {
   color?: string;
 }
 
-const Component = ({ name, size = 16, color }: IIconProps) => {
+const Component = ({name, size = 16, color}: IIconProps) => {
   const appTheme = useTheme();
   return (
     <IconWrapper>

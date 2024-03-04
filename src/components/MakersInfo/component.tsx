@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import styled, { useTheme } from 'styled-components/native';
+import React from 'react';
+import styled, {useTheme} from 'styled-components/native';
 import Typography from '../Typography';
 import FastImage from 'react-native-fast-image';
-import { useNavigation } from '@react-navigation/native';
-import { tMakers } from '../../utils/types/teamType';
+import {useNavigation} from '@react-navigation/native';
+import {tMakers} from '../../utils/types/teamType';
 
 interface IMakersInfoProps {
   isMakers: boolean;
@@ -12,7 +12,13 @@ interface IMakersInfoProps {
   latitude: number;
   longitude: number;
 }
-const Component = ({ isMakers, makers, teamId, latitude, longitude }: IMakersInfoProps) => {
+const Component = ({
+  isMakers,
+  makers,
+  teamId,
+  latitude,
+  longitude,
+}: IMakersInfoProps) => {
   const themeApp = useTheme();
   const navigation = useNavigation<any>();
   return (
@@ -22,28 +28,34 @@ const Component = ({ isMakers, makers, teamId, latitude, longitude }: IMakersInf
       </Typography>
       <SelectMakers
         onPress={() => {
-          if (isMakers) navigation.navigate('P_MAKERS_INFO', {
-            id: makers?.id,
-            storeName: makers?.name,
-            image: makers?.image
-          });
-          else navigation.navigate('P_MAKERS_LIST', {
-            teamId: teamId,
-            lat: latitude,
-            lng: longitude
-          });
+          if (isMakers) {
+            navigation.navigate('P_MAKERS_INFO', {
+              id: makers?.id,
+              storeName: makers?.name,
+              image: makers?.image,
+            });
+          } else {
+            navigation.navigate('P_MAKERS_LIST', {
+              teamId: teamId,
+              lat: latitude,
+              lng: longitude,
+            });
+          }
           // navigation.navigate('P_MAKERS_LIST', {
           //   teamId: teamId,
           //   lat: latitude,
           //   lng: longitude
           // });
-        }}
-      >
+        }}>
         {isMakers ? (
           <MakersInfoBox>
             <FastImage
-              source={makers?.image ? { uri: makers.image } : require('../../assets/images/default.png')}
-              style={{ width: 42, height: 42, marginRight: 8 }}
+              source={
+                makers?.image
+                  ? {uri: makers.image}
+                  : require('../../assets/images/default.png')
+              }
+              style={{width: 42, height: 42, marginRight: 8}}
               resizeMode="cover"
             />
             <Typography text="Body06SB" textColor={themeApp.colors.gray[2]}>
@@ -63,11 +75,11 @@ const Component = ({ isMakers, makers, teamId, latitude, longitude }: IMakersInf
           </Typography>
           <FastImage
             source={require('../../assets/images/arrow-right.png')}
-            style={{ width: 14, height: 14, marginLeft: 2 }}
+            style={{width: 14, height: 14, marginLeft: 2}}
           />
         </GoOrderView>
       </SelectMakers>
-    </Container >
+    </Container>
   );
 };
 

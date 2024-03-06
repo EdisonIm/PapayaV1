@@ -6,7 +6,7 @@ import SearchButton from '../MainTab/SearchTeam/components/SearchButton';
 import {RootStackProps} from '../../utils/types/navigation';
 import Typography from '../../components/Typography';
 import LocationCircle from '../../components/Location';
-import NaverMapView, {Marker} from 'react-native-nmap';
+//import NaverMapView, {Marker} from 'react-native-nmap';
 import {useGetRoadAddress} from '../../hooks/map';
 import {createTeamInitAtom} from '../../utils/store';
 import {useAtom} from 'jotai';
@@ -20,7 +20,7 @@ export interface IPageProps {
 }
 export const PAGE_NAME = 'P_CREATETEAM';
 export const TAB_NAME = 'T_CREATETEAM';
-const Pages = ({route, navigation}: RootStackProps<'P_CREATETEAM'>) => {
+const CreateTeamPages = ({route, navigation}: RootStackProps<'P_CREATETEAM'>) => {
   const params = route.params;
   const themeApp = useTheme();
 
@@ -105,7 +105,7 @@ const Pages = ({route, navigation}: RootStackProps<'P_CREATETEAM'>) => {
   );
 };
 
-export default Pages;
+export default CreateTeamPages;
 
 const Wrap = styled.View`
   background-color: white;

@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import styled, {css, useTheme} from 'styled-components/native';
-import {optionStyles, textStyles, variantStyles, weightStyles} from './styles';
-import {TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import styled, { css, useTheme } from 'styled-components/native';
+import { optionStyles, textStyles, variantStyles, weightStyles } from './styles';
+import { TouchableOpacity, Text } from 'react-native';
 
-interface ITypograhpyProps {
+interface ITypographyProps {
   children: React.ReactNode;
   variant?: string;
   weight?: string;
@@ -18,79 +18,83 @@ interface ITypograhpyProps {
   [key: string]: any;
 }
 
-const Component: React.FunctionComponent<ITypograhpyProps> = props => {
-  const {children, maxChars} = props;
+const Typography: React.FunctionComponent<ITypographyProps> = ({
+  children,
+  maxChars,
+  lineBreakStrategyIOS,
+  weight,
+  align,
+  variant,
+  option,
+  text,
+  ellipsizeMode,
+  textColor,
+  ...props
+}) => {
+  console.log('렌더링: Typography');
   const [isTruncated, setIsTruncated] = useState<boolean>(true);
-  const themeApp = useTheme();
-  const textChild = props.children as string;
+  const themeApp = useTheme(); // Ensure useTheme is called within a ThemeProvider
+  let textChild = '';
+
+  if (typeof children === 'string') {
+    textChild = children;
+  }
+
   const toggleTruncate = () => {
     setIsTruncated(!isTruncated);
   };
 
   return (
-    <Typograhpy
-      lineBreakStrategyIOS={props.lineBreakStrategyIOS}
-      weight={props.weight}
-      align={props.align}
-      variant={props.variant}
-      option={props.option}
-      text={props.text}
-      ellipsizeMode={props.ellipsizeMode}
-      textColor={props.textColor}
-      {...props}>
+    <StyledTypography
+      lineBreakStrategyIOS={lineBreakStrategyIOS}
+      weight={weight}
+      align={align}
+      variant={variant}
+      option={option}
+      text={text}
+      ellipsizeMode={ellipsizeMode}
+      textColor={textColor}
+      {...props}
+    >
       {maxChars && textChild.length > maxChars && isTruncated
         ? `${textChild.slice(0, maxChars)}...`
         : children}
       {maxChars && textChild && textChild.length > maxChars && (
         <TouchableOpacity onPress={toggleTruncate}>
-          <Typograhpy
-            text={'CaptionR'}
-            textColor={themeApp.colors.gray[6]}
+          <Text
             style={{
               textDecorationLine: 'underline',
               position: 'absolute',
               bottom: -4,
               left: !isTruncated ? 5 : 0,
-            }}>
+              color: themeApp.colors.gray[6], // Ensure this color is defined in your theme
+            }}
+          >
             {isTruncated ? '더보기' : '접기'}
-          </Typograhpy>
+          </Text>
         </TouchableOpacity>
       )}
-    </Typograhpy>
+    </StyledTypography>
   );
 };
 
-export default Component;
+export default Typography;
 
-const Typograhpy = styled.Text<ITypograhpyProps>`
+const StyledTypography = styled.Text<ITypographyProps>`
   font-style: normal;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
-  ${({variant}) => variant && variantStyles[variant]};
-  ${({option}) => option && optionStyles[option]}
-  ${({weight}) => weight && weightStyles[weight]};
-  ${({text}) => text && textStyles[text]};
-  ${({align}) =>
-    align &&
+  ${({ variant }) => variant && variantStyles[variant]};
+  ${({ option }) => option && optionStyles[option]};
+  ${({ weight }) => weight && weightStyles[weight]};
+  ${({ text }) => text && textStyles[text]};
+  ${({ align }) => align && css`text-align: ${align};`};
+  ${({ textColor, theme }) =>
+    textColor &&
     css`
-      text-align: ${align};
+      color: ${textColor};
     `};
-
-  ${({textColor}) => {
-    if (!textColor) {
-      return null;
-    }
-
-    const isNeedNotProperty = Array.isArray(textColor);
-    return isNeedNotProperty
-      ? css`
-          ${textColor}
-        `
-      : css`
-          color: ${textColor};
-        `;
-  }};
   background-color: transparent;
 `;

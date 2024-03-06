@@ -1,3 +1,4 @@
+//import 시도하였으나 오류 발생 version
 import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from './src/store/reducer';
@@ -20,9 +21,8 @@ import ImageUploader from './src/pages/UserProfile/components/ImageUploader';
 import MakersLogin from './srcMakers/makersPages/MakersLogin';
 import MakersProfile from './srcMakers/makersPages/MakersProfile';
 import MakersSignUp from './srcMakers/makersPages/MakersSignUp';
-//f-v2 import page
-import CreateTeamPages from './src/pages/CreateTeam/index';
-import TeamInput from './src/pages/CreateTeam/components/TeamInput';
+// Import f-v2
+import MainTabBar from './src/layouts/MainTabBar';
 
 // Define param lists for navigation
 export type LoggedInParamList = {
@@ -45,9 +45,7 @@ export type RootStackParamList = {
   AddressUploader: undefined;
   ImageUploader: {
     userEmail: string;
-    onImageUploaded?: (url: string) => void;
-  CreateTeamPage: undefined;
-  TeamInputPage: undefined;
+    onImageUploaded?: (url: string) => void; // 선택적으로 onImageUploaded 함수 포함
   };
 };
 
@@ -80,68 +78,13 @@ function AppInner() {
 
   if (isLoggedIn || isMakersLoggedIn) {
     return (
-      <Tab.Navigator>
+      <Tab.Navigator tabBar={(props) => <MainTabBar {...props} />}>
         <Tab.Screen
           name="UserProfile"
           component={UserProfile}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="CreateTeamPages"
-          component={CreateTeamPages}
-          options={{ headerShown: true, title: '팀 생성' }}
-        />
-      <Stack.Screen
-          name="TeamInput"
-          component={TeamInput}
-          options={{ headerShown: true, title: '팀 정보 입력' }}
-        />
-        <Stack.Screen
-          name="NameUploader"
-          component={NameUploader}
-          options={{title: 'Edit Name'}}
-        />
-        <Stack.Screen
-          name="PhoneNumberUploader"
-          component={PhoneNumberUploader}
-          options={{title: 'Edit Phone Number'}}
-        />
-        <Stack.Screen
-          name="AddressUploader"
-          component={AddressUploader}
-          options={{title: 'Edit Address'}}
-        />
-        <Stack.Screen name="ImageUploader" options={{title: 'ImageUploader'}}>
-          {props => (
-            <ImageUploader
-              userEmail={''}
-              {...props}
-              onImageUploaded={url => console.log(url)}
-            />
-          )}
-        </Stack.Screen>
-        {/*<Tab.Screen
-          name="Orders"
-          component={Orders}
-          options={{title: '오더 목록'}}
-        />
-        <Tab.Screen
-          name="Delivery"
-          component={Delivery}
-          options={{title: '내 오더'}}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={Settings}
-          options={{title: '설정'}}
-    />*/}
-        {isMakersLoggedIn && (
-          <Tab.Screen
-            name="MakersProfile"
-            component={MakersProfile}
-            options={{title: '메이커스 정보'}}
-          />
-        )}
+        {/* 다른 탭 스크린들을 여기에 추가하세요. */}
       </Tab.Navigator>
     );
   } else {
@@ -150,28 +93,29 @@ function AppInner() {
         <Stack.Screen
           name="MainPage"
           component={MainPage}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SignUp"
           component={SignUp}
-          options={{title: '회원가입'}}
+          options={{ title: '회원가입' }}
         />
         <Stack.Screen
           name="MakersLogin"
           component={MakersLogin}
-          options={{title: '메이커스 로그인'}}
+          options={{ title: '메이커스 로그인' }}
         />
         <Stack.Screen
           name="MakersSignUp"
           component={MakersSignUp}
-          options={{title: '메이커스 회원가입'}}
+          options={{ title: '메이커스 회원가입' }}
         />
+        {/* 필요한 경우 추가 Stack.Screen 컴포넌트를 여기에 추가하세요. */}
       </Stack.Navigator>
     );
   }

@@ -31,7 +31,6 @@ const Typography: React.FunctionComponent<ITypographyProps> = ({
   textColor,
   ...props
 }) => {
-  console.log('렌더링: Typography');
   const [isTruncated, setIsTruncated] = useState<boolean>(true);
   const themeApp = useTheme(); // Ensure useTheme is called within a ThemeProvider
   let textChild = '';

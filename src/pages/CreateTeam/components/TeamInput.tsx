@@ -112,8 +112,8 @@ const TeamInput = ({ route }: any) => {
         address1: roadAddress,
         address2: undefined, // 상세주소
         address3: address,
-        latitude: latitude.toString(),
-        longitude: longitude.toString(),
+        latitude: latitude ? latitude.toString() : '',
+        longitude: longitude ? longitude.toString() : '',
       },
       deliveryDate: formattedDate(date, '-'),
       deliveryTime: formattedTime2(time),

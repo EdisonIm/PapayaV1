@@ -9,7 +9,7 @@ import { USER_ID } from '../../config/const';
 
 export const PAGE_NAME = 'P_MAKERS_LIST';
 
-const Pages = ({ route, navigation }: RootStackProps<'P_MAKERS_LIST'>) => {
+const MakersListPages = ({ route, navigation }: RootStackProps<'P_MAKERS_LIST'>) => {
   const { lat, lng, teamId } = route.params;
   const { myTeamMakerslist } = useTeamMakersList(lat, lng);
   const { mutateAsync: selectMakers } = useTeamSelectMakers();
@@ -51,7 +51,7 @@ const Pages = ({ route, navigation }: RootStackProps<'P_MAKERS_LIST'>) => {
   );
 };
 
-export default Pages;
+export default MakersListPages;
 
 const Conatiner = styled.View`
   flex: 1;

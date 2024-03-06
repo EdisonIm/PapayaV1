@@ -23,6 +23,8 @@ import MakersSignUp from './srcMakers/makersPages/MakersSignUp';
 //f-v2 import page
 import CreateTeamPages from './src/pages/CreateTeam/index';
 import TeamInput from './src/pages/CreateTeam/components/TeamInput';
+import SearchTeamPages from './src/pages/MainTab/SearchTeam';
+import MakersInfo from './src/components/MakersInfo';
 
 // Define param lists for navigation
 export type LoggedInParamList = {
@@ -86,15 +88,25 @@ function AppInner() {
           component={UserProfile}
           options={{headerShown: false}}
         />
+        <Tab.Screen
+          name="MakersInfo"
+          component={MakersInfo}
+          options={{ headerShown: false, title: '메이커 리스트' }}
+        />
+        <Tab.Screen
+          name="SearchTeamPages"
+          component={SearchTeamPages}
+          options={{ headerShown: false, title: '팀 찾기' }}
+        />
         <Stack.Screen
           name="CreateTeamPages"
           component={CreateTeamPages}
-          options={{ headerShown: true, title: '팀 생성' }}
+          options={{ headerShown: false, title: '팀 생성' }}
         />
-      <Stack.Screen
+        <Stack.Screen
           name="TeamInput"
           component={TeamInput}
-          options={{ headerShown: true, title: '팀 정보 입력' }}
+          options={{ headerShown: false}}
         />
         <Stack.Screen
           name="NameUploader"

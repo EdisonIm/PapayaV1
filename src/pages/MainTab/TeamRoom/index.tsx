@@ -6,7 +6,7 @@ import {useMyTeamList} from '../../../hooks/team';
 import {USER_ID} from '../../../config/const';
 
 export const TAB_NAME = 'T_TEAMROOM';
-const Pages = ({navigation}: MainTabProps<'T_TEAMROOM'>) => {
+const TeamRoomPages = ({navigation}: MainTabProps<'T_TEAMROOM'>) => {
   const {myTeamlist} = useMyTeamList(USER_ID);
   // console.log(myTeamlist);
   return (
@@ -30,4 +30,4 @@ const Pages = ({navigation}: MainTabProps<'T_TEAMROOM'>) => {
   );
 };
 
-export default Pages;
+export default TeamRoomPages;

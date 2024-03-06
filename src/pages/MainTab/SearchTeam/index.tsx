@@ -21,7 +21,7 @@ export interface IPageProps {
 }
 
 export const TAB_NAME = 'T_SEARCHTEAM';
-const Pages = ({ route, navigation }: MainTabProps<'T_SEARCHTEAM'>) => {
+const SearchTeamPages = ({ route, navigation }: MainTabProps<'T_SEARCHTEAM'>) => {
   const themeApp = useTheme();
   const params = route.params;
   const [tab, setTab] = useState<number>();
@@ -102,7 +102,7 @@ const Pages = ({ route, navigation }: MainTabProps<'T_SEARCHTEAM'>) => {
   );
 };
 
-export default Pages;
+export default SearchTeamPages;
 
 const Wrap = styled.View`
   background-color: white;

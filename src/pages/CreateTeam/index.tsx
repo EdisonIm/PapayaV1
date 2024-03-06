@@ -6,7 +6,7 @@ import SearchButton from '../MainTab/SearchTeam/components/SearchButton';
 import {RootStackProps} from '../../utils/types/navigation';
 import Typography from '../../components/Typography';
 import LocationCircle from '../../components/Location';
-//import NaverMapView, {Marker} from 'react-native-nmap';
+import NaverMapView, {Marker} from 'react-native-nmap';
 import {useGetRoadAddress} from '../../hooks/map';
 import {createTeamInitAtom} from '../../utils/store';
 import {useAtom} from 'jotai';
